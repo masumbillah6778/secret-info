@@ -1,0 +1,2802 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SOROLIPI - User / View Panel</title>
+
+<style>
+
+*{
+box-sizing:border-box
+}
+
+body{
+margin:0;
+font-family:
+Arial,
+"Noto Sans Bengali",
+sans-serif;
+background:#f5f8fc;
+color:#17324d
+}
+
+button,
+input{
+font:inherit
+}
+
+.hidden{
+display:none!important
+}
+
+.sidebar{
+position:fixed;
+left:0;
+top:0;
+bottom:0;
+width:250px;
+background:#07579f;
+color:#fff;
+padding:18px 14px;
+z-index:30;
+transition:.25s
+}
+
+.logo{
+font-size:26px;
+font-weight:800;
+padding:8px 10px 24px
+}
+
+.nav button{
+display:block;
+width:100%;
+border:0;
+background:transparent;
+color:#fff;
+text-align:left;
+padding:13px;
+border-radius:9px;
+margin:5px 0;
+cursor:pointer
+}
+
+.nav button:hover,
+.nav button.active{
+background:#2389e4
+}
+
+.main{
+margin-left:250px;
+min-height:100vh
+}
+
+.top{
+height:66px;
+background:#fff;
+border-bottom:1px solid #dce7f1;
+display:flex;
+align-items:center;
+padding:0 20px;
+gap:15px;
+position:sticky;
+top:0;
+z-index:20
+}
+
+.menu{
+border:0;
+background:transparent;
+color:#07579f;
+font-size:25px;
+cursor:pointer
+}
+
+.brand{
+font-weight:800;
+color:#07579f;
+font-size:22px
+}
+
+.search{
+margin-left:auto
+}
+
+.search input{
+width:260px;
+padding:9px 12px;
+border:1px solid #ccdbea;
+border-radius:8px
+}
+
+.content{
+padding:25px
+}
+
+.welcome h1{
+margin:0 0 5px;
+color:#174c7c
+}
+
+.welcome p{
+margin:0;
+color:#627789
+}
+
+.section{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin:25px 0 15px
+}
+
+.section h2{
+margin:0;
+font-size:28px
+}
+
+.count b{
+color:#e33d3d
+}
+
+.cards{
+display:grid;
+grid-template-columns:
+repeat(auto-fill,minmax(205px,1fr));
+gap:17px
+}
+
+.add,
+.card{
+min-height:140px;
+border-radius:14px;
+display:flex;
+align-items:center;
+justify-content:center;
+position:relative;
+cursor:pointer;
+border:1px solid #d6e3ee;
+box-shadow:0 3px 12px #194c7112
+}
+
+.card{
+justify-content:flex-start;
+padding:20px
+}
+
+.card h3{
+margin:0;
+font-size:22px
+}
+
+.card .card-icon{
+width:52px;
+height:52px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:34px;
+margin-right:12px
+}
+
+.card .card-icon img{
+width:100%;
+height:100%;
+object-fit:contain
+}
+
+.dots{
+position:absolute;
+right:8px;
+top:5px;
+border:0;
+background:transparent;
+font-size:25px;
+cursor:pointer;
+color:#536b7d
+}
+
+.menu-pop{
+display:none;
+position:absolute;
+right:8px;
+top:38px;
+background:#fff;
+border:1px solid #dbe6ef;
+box-shadow:0 7px 25px #0002;
+border-radius:8px;
+overflow:hidden;
+z-index:10
+}
+
+.page{
+display:none
+}
+
+.page.active{
+display:block
+}
+
+.table-head{
+background:#fff;
+border:1px solid #dbe6ef;
+border-radius:12px;
+padding:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px
+}
+
+.back{
+border:0;
+background:#eef5fa;
+color:#07579f;
+padding:9px 13px;
+border-radius:8px;
+font-weight:700
+}
+
+.table-search{
+margin-left:auto
+}
+
+.table-search input{
+padding:9px 12px;
+border:1px solid #ccdbea;
+border-radius:8px
+}
+
+.table-wrap{
+margin-top:15px;
+background:#fff;
+border:1px solid #dbe6ef;
+border-radius:12px;
+overflow:auto
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+min-width:700px
+}
+
+th,
+td{
+padding:10px;
+border-bottom:1px solid #e5edf3;
+border-right:1px solid #e5edf3;
+text-align:left;
+vertical-align:middle
+}
+
+th{
+background:#edf5fa;
+font-weight:800
+}
+
+.action{
+white-space:nowrap;
+text-align:center
+}
+
+.act{
+width:38px;
+height:34px;
+display:inline-flex;
+align-items:center;
+justify-content:center;
+padding:5px;
+font-size:20px;
+line-height:1;
+vertical-align:middle;
+border:1px solid #d8e4ed;
+background:#fff;
+border-radius:7px
+}
+
+.action-icon-img{
+width:24px;
+height:24px;
+object-fit:contain;
+display:block
+}
+
+.money-total{
+font-weight:900;
+color:#d62424;
+font-size:16px
+}
+
+.empty{
+padding:30px;
+text-align:center;
+color:#718596
+}
+
+.link-grid{
+display:grid;
+grid-template-columns:
+repeat(4,minmax(0,1fr));
+gap:10px
+}
+
+.link-tile{
+min-height:95px;
+background:#fff;
+border:1px solid #d9e5ee;
+border-radius:11px;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:9px;
+position:relative
+}
+
+.video-icon{
+width:36px;
+height:36px;
+border-radius:50%;
+background:#e9f2f8;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:19px;
+margin-bottom:6px
+}
+
+.link-tile-name{
+font-size:13px;
+font-weight:800;
+color:#17324d;
+word-break:break-word
+}
+
+.link-tile-url{
+font-size:10px;
+color:#74899a;
+word-break:break-all;
+margin-top:4px
+}
+
+
+/* =========================
+   MEDIA
+========================= */
+
+.media-mode{
+margin-top:0
+}
+
+.media-month{
+margin:0 0 22px;
+background:#fff;
+border:1px solid #dbe6ef;
+border-radius:13px;
+padding:14px
+}
+
+.media-date{
+font-size:19px;
+font-weight:900;
+color:#07579f;
+margin-bottom:12px
+}
+
+.media-grid{
+display:grid;
+grid-template-columns:
+repeat(4,minmax(0,1fr));
+gap:12px
+}
+
+.media-tile{
+background:#fff;
+border:1px solid #d9e5ee;
+border-radius:12px;
+overflow:hidden;
+box-shadow:0 3px 12px #194c7112;
+min-width:0;
+cursor:pointer
+}
+
+.media-tile-head{
+padding:9px 10px;
+font-weight:800;
+color:#17324d;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis
+}
+
+.media-thumb-wrap{
+aspect-ratio:16/10;
+background:#edf3f8;
+display:flex;
+align-items:center;
+justify-content:center;
+overflow:hidden
+}
+
+.media-thumb{
+width:100%;
+height:100%;
+object-fit:cover;
+display:block
+}
+
+.media-tile video{
+width:100%;
+height:100%;
+object-fit:cover;
+display:block
+}
+
+.media-audio{
+width:calc(100% - 16px);
+margin:8px
+}
+
+.media-play{
+font-size:38px;
+line-height:1
+}
+
+.media-empty{
+padding:25px;
+text-align:center;
+color:#667b8c;
+background:#fff;
+border:1px dashed #cbdbe7;
+border-radius:12px
+}
+
+.media-lightbox{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.82);
+z-index:9999;
+align-items:center;
+justify-content:center;
+padding:20px
+}
+
+.media-lightbox.show{
+display:flex
+}
+
+.media-lightbox-inner{
+position:relative;
+max-width:min(94vw,1000px);
+max-height:92vh;
+width:100%;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center
+}
+
+.media-lightbox img,
+.media-lightbox video{
+max-width:94vw;
+max-height:78vh;
+border-radius:10px;
+background:#000;
+object-fit:contain
+}
+
+.media-lightbox audio{
+width:min(760px,90vw)
+}
+
+.media-lightbox-name{
+color:#fff;
+font-size:18px;
+font-weight:800;
+margin-top:10px;
+text-align:center
+}
+
+.media-close{
+position:absolute;
+right:-4px;
+top:-42px;
+width:38px;
+height:38px;
+border:0;
+border-radius:50%;
+background:#fff;
+color:#222;
+font-size:28px;
+line-height:1;
+cursor:pointer
+}
+
+
+/* =========================
+   CARD PASSWORD MODAL
+========================= */
+
+#cardPasswordModal{
+z-index:10000;
+}
+
+.password-box{
+width:min(420px,94vw);
+background:#fff;
+border-radius:15px;
+padding:22px;
+box-shadow:0 15px 50px #0006;
+}
+
+.password-box h3{
+margin:0 0 8px;
+color:#07579f;
+}
+
+.password-box p{
+margin:0 0 15px;
+color:#63798a;
+font-size:14px;
+}
+
+.password-box input{
+width:100%;
+padding:11px 13px;
+border:1px solid #ccdbe7;
+border-radius:8px;
+outline:0;
+}
+
+.password-error{
+display:none;
+color:#d52b2b;
+font-size:13px;
+margin-top:8px;
+font-weight:700;
+}
+
+.password-actions{
+display:flex;
+justify-content:flex-end;
+gap:8px;
+margin-top:16px;
+}
+
+@media(max-width:900px){
+
+.media-grid{
+grid-template-columns:
+repeat(3,minmax(0,1fr))
+}
+
+}
+
+@media(max-width:800px){
+
+.sidebar{
+transform:translateX(-100%)
+}
+
+.sidebar.open{
+transform:translateX(0)
+}
+
+.main{
+margin-left:0
+}
+
+.menu{
+display:block
+}
+
+.link-grid{
+grid-template-columns:
+repeat(4,minmax(0,1fr));
+gap:8px
+}
+
+.link-tile{
+min-height:92px;
+padding:8px 4px
+}
+
+.video-icon{
+width:32px;
+height:32px;
+font-size:17px
+}
+
+.link-tile-name{
+font-size:12px
+}
+
+.link-tile-url{
+font-size:9px
+}
+
+}
+
+@media(max-width:600px){
+
+.media-grid{
+grid-template-columns:
+repeat(2,minmax(0,1fr));
+gap:8px
+}
+
+.media-month{
+padding:10px
+}
+
+.media-date{
+font-size:17px
+}
+
+.media-tile-head{
+font-size:12px;
+padding:7px
+}
+
+.media-close{
+right:0
+}
+
+}
+
+@media(max-width:480px){
+
+.search{
+display:none
+}
+
+.cards{
+gap:10px
+}
+
+.card{
+min-height:120px
+}
+
+.card h3{
+font-size:18px
+}
+
+.gmail-name{
+font-size:23px
+}
+
+.link-grid{
+grid-template-columns:
+repeat(4,minmax(0,1fr));
+gap:6px
+}
+
+.link-tile{
+min-height:82px;
+border-radius:9px
+}
+
+.video-icon{
+width:28px;
+height:28px;
+font-size:15px;
+margin-bottom:5px
+}
+
+.link-tile-name{
+font-size:10px
+}
+
+.link-tile-url{
+display:none
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="app">
+
+<aside id="sidebar"
+class="sidebar">
+
+<div class="logo">
+▣ SOROLIPI
+</div>
+
+<nav class="nav">
+
+<button
+data-page="dashboard"
+class="active">
+⌂ &nbsp; ড্যাশবোর্ড
+</button>
+
+<button
+data-page="settings">
+⚙ &nbsp; সিটিং
+</button>
+
+<button id="logout">
+⇥ &nbsp; লগআউট
+</button>
+
+</nav>
+
+</aside>
+
+<main class="main">
+
+<header class="top">
+
+<button
+id="menu"
+class="menu">
+☰
+</button>
+
+<div class="brand">
+SOROLIPI
+</div>
+
+<div class="search">
+
+<input
+id="globalSearch"
+placeholder="কার্ড সার্চ করুন...">
+
+</div>
+
+</header>
+
+<section class="content">
+
+<div id="dashboard"
+class="page active">
+
+<div class="welcome">
+
+<h1>
+স্বাগতম, SOROLIPI
+</h1>
+
+<p>
+সহজে তথ্য দেখুন।
+</p>
+
+</div>
+
+<div class="section">
+
+<h2>
+কার্ডসমূহ
+</h2>
+
+<div class="count">
+মোট কার্ড <b id="cardCount">০</b>
+</div>
+
+</div>
+
+<div id="cards"
+class="cards">
+</div>
+
+</div>
+
+
+<div id="tablePage"
+class="page">
+
+<div class="table-head">
+
+<div>
+
+<button id="back"
+class="back">
+← সকল কার্ড
+</button>
+
+<h2
+id="tableTitle"
+style="margin:12px 0 0">
+</h2>
+
+</div>
+
+<div class="table-search">
+
+<input
+id="tableSearch"
+placeholder="তথ্য সার্চ করুন...">
+
+</div>
+
+</div>
+
+<div id="tableSections">
+</div>
+
+</div>
+
+
+<div id="settings"
+class="page">
+
+<div class="welcome">
+
+<h2>
+সিটিং
+</h2>
+
+<p>
+User Panel-এর জন্য প্রয়োজনীয় সেটিং।
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+
+<!-- MEDIA LIGHTBOX -->
+
+<div id="mediaLightbox"
+class="media-lightbox">
+
+<div class="media-lightbox-inner">
+
+<button
+id="mediaClose"
+class="media-close"
+type="button">
+×
+</button>
+
+<div id="mediaLightboxBody">
+</div>
+
+<div id="mediaLightboxName"
+class="media-lightbox-name">
+</div>
+
+</div>
+
+</div>
+
+
+<!-- CARD PASSWORD MODAL -->
+
+<div id="cardPasswordModal"
+class="media-lightbox">
+
+<div class="password-box">
+
+<h3 id="cardPasswordTitle">
+পাসওয়ার্ড দিন
+</h3>
+
+<p>
+এই কার্ডটি দেখতে পাসওয়ার্ড প্রয়োজন।
+</p>
+
+<input
+id="cardPasswordInput"
+type="password"
+autocomplete="off"
+placeholder="কার্ডের পাসওয়ার্ড">
+
+<div
+id="cardPasswordError"
+class="password-error">
+ভুল পাসওয়ার্ড। আবার চেষ্টা করুন।
+</div>
+
+<div class="password-actions">
+
+<button
+id="cardPasswordCancel"
+class="back"
+type="button">
+বাতিল
+</button>
+
+<button
+id="cardPasswordSubmit"
+class="btn btn-blue"
+type="button">
+প্রবেশ করুন
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+const $=
+id=>document.getElementById(id);
+
+const KEY=
+"SOROLIPI_DATA_V2";
+
+
+let data={
+cards:[]
+};
+
+let currentId=
+null;
+
+
+/* =========================
+   PASSWORD UNLOCK STATE
+========================= */
+
+const unlockedCardIds=
+new Set();
+
+let pendingPasswordCardId=
+null;
+
+
+/* =========================
+   LOAD DATA
+========================= */
+
+try{
+
+const saved=
+localStorage.getItem(KEY);
+
+if(saved){
+
+const parsed=
+JSON.parse(saved);
+
+if(
+parsed &&
+Array.isArray(parsed.cards)
+){
+
+data=parsed;
+
+}
+
+}
+
+}catch(e){
+
+data={
+cards:[]
+};
+
+}
+
+
+/* =========================
+   ESC
+========================= */
+
+function esc(s){
+
+return String(s??"")
+.replace(/[&<>"']/g,m=>({
+
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#39;"
+
+}[m]));
+
+}
+
+
+/* =========================
+   ICON
+========================= */
+
+function isImageIcon(v){
+
+return /^(https?:\/\/|data:image\/)/i
+.test(String(v||"").trim());
+
+}
+
+
+function iconHTML(v){
+
+let s=
+String(v||"").trim();
+
+if(!s)
+return "📁";
+
+if(isImageIcon(s)){
+
+return `
+<img
+src="${esc(s)}"
+alt=""
+onerror="
+this.style.display='none';
+this.parentElement.textContent='📁';
+">
+`;
+
+}
+
+return esc(s);
+
+}
+
+
+/* =========================
+   ACTION ICON
+========================= */
+
+const ACTION_ICONS={
+
+view:"👁️",
+
+call:"📞"
+
+};
+
+
+function isImageActionIcon(v){
+
+return /^(https?:\/\/|data:image\/)/i
+.test(String(v||"").trim());
+
+}
+
+
+function actionIconHTML(type){
+
+let v=
+ACTION_ICONS[type]||"•";
+
+let s=
+String(v).trim();
+
+if(isImageActionIcon(s)){
+
+return `
+<img
+src="${esc(s)}"
+alt=""
+class="action-icon-img"
+onerror="
+this.style.display='none';
+this.parentElement.textContent='•';
+">
+`;
+
+}
+
+return esc(s);
+
+}
+
+
+/* =========================
+   GMAIL
+========================= */
+
+function isGmailCard(c){
+
+return !!c &&
+String(c.name||"").trim()==="জিমেইল";
+
+}
+
+
+function ensureGmailCard(){
+
+let gs=
+data.cards.filter(
+isGmailCard
+);
+
+let g=gs[0];
+
+if(!g){
+
+g={
+
+id:"gmail-"+Date.now(),
+
+name:"জিমেইল",
+
+headers:[],
+
+color:"c4",
+
+rows:[],
+
+linkMode:false,
+
+gmailRecords:[]
+
+};
+
+data.cards.push(g);
+
+}
+
+if(!Array.isArray(g.gmailRecords)){
+
+g.gmailRecords=[];
+
+}
+
+if(gs.length>1){
+
+gs.slice(1).forEach(x=>{
+
+if(Array.isArray(x.gmailRecords)){
+
+g.gmailRecords.push(
+...x.gmailRecords
+);
+
+}
+
+});
+
+data.cards=
+data.cards.filter(
+x=>x===g ||
+!isGmailCard(x)
+);
+
+}
+
+return g;
+
+}
+
+
+/* =========================
+   LINK CARD
+========================= */
+
+function isLinkCard(c){
+
+return !!c &&
+/(?:লিংক|লিঙ্ক)\s*$/i
+.test(
+String(c.name||"")
+);
+
+}
+
+
+function normalizeLinkCard(c){
+
+c.linkMode=
+isLinkCard(c);
+
+if(
+c.linkMode &&
+(!Array.isArray(c.headers) ||
+!c.headers.length)
+){
+
+c.headers=[
+"তারিখ",
+"নাম",
+"লিংক"
+];
+
+}
+
+}
+
+
+/* =========================
+   MEDIA CARD
+========================= */
+
+function mediaType(c){
+
+const n=
+String(c?.name||"").trim();
+
+if(/অডিও|audio|mp3|sound/i.test(n))
+return "audio";
+
+if(/ভিডিও|video|movie|clip/i.test(n))
+return "video";
+
+if(/ছবি|ফটো|photo|image/i.test(n))
+return "image";
+
+return "";
+
+}
+
+
+function isMediaCard(c){
+
+return !!mediaType(c);
+
+}
+
+
+function normalizeMediaCard(c){
+
+const t=
+mediaType(c);
+
+if(
+t &&
+(!Array.isArray(c.headers) ||
+!c.headers.length)
+){
+
+c.headers=[
+"নং",
+"তারিখ",
+"নাম",
+"লিংক"
+];
+
+}
+
+}
+
+
+/* =========================
+   PASSWORD
+========================= */
+
+function openCardPassword(id){
+
+const c=
+data.cards.find(
+x=>x.id===id
+);
+
+if(!c)
+return;
+
+pendingPasswordCardId=
+id;
+
+$("cardPasswordTitle").textContent=
+c.name+
+" - পাসওয়ার্ড";
+
+$("cardPasswordInput").value="";
+
+$("cardPasswordError")
+.style.display="none";
+
+$("cardPasswordModal")
+.classList.add("show");
+
+setTimeout(()=>{
+
+$("cardPasswordInput").focus();
+
+},80);
+
+}
+
+
+function closeCardPassword(){
+
+pendingPasswordCardId=
+null;
+
+$("cardPasswordInput").value="";
+
+$("cardPasswordError")
+.style.display="none";
+
+$("cardPasswordModal")
+.classList.remove("show");
+
+}
+
+
+function submitCardPassword(){
+
+if(!pendingPasswordCardId)
+return;
+
+const c=
+data.cards.find(
+x=>x.id===pendingPasswordCardId
+);
+
+if(!c){
+
+closeCardPassword();
+
+return;
+
+}
+
+const entered=
+String(
+$("cardPasswordInput").value||""
+);
+
+const savedPassword=
+String(
+c.password||""
+);
+
+if(
+entered===savedPassword
+){
+
+unlockedCardIds.add(
+String(c.id)
+);
+
+const id=
+pendingPasswordCardId;
+
+closeCardPassword();
+
+openCardUnlocked(id);
+
+}else{
+
+$("cardPasswordError")
+.style.display="block";
+
+$("cardPasswordInput").value="";
+
+$("cardPasswordInput").focus();
+
+}
+
+}
+
+
+$("cardPasswordCancel")
+.onclick=closeCardPassword;
+
+$("cardPasswordSubmit")
+.onclick=submitCardPassword;
+
+$("cardPasswordInput")
+.addEventListener(
+"keydown",
+e=>{
+
+if(e.key==="Enter"){
+
+submitCardPassword();
+
+}
+
+if(e.key==="Escape"){
+
+closeCardPassword();
+
+}
+
+});
+
+
+$("cardPasswordModal")
+.addEventListener(
+"click",
+e=>{
+
+if(
+e.target===
+$("cardPasswordModal")
+){
+
+closeCardPassword();
+
+}
+
+});
+
+
+/* =========================
+   OPEN CARD
+========================= */
+
+function openCard(id){
+
+const c=
+data.cards.find(
+x=>x.id===id
+);
+
+if(!c)
+return;
+
+const password=
+String(c.password||"").trim();
+
+if(
+password &&
+!unlockedCardIds.has(
+String(id)
+)
+){
+
+openCardPassword(id);
+
+return;
+
+}
+
+openCardUnlocked(id);
+
+}
+
+
+function openCardUnlocked(id){
+
+currentId=
+id;
+
+const c=
+data.cards.find(
+x=>x.id===id
+);
+
+if(!c)
+return;
+
+$("dashboard")
+.classList.remove("active");
+
+$("settings")
+.classList.remove("active");
+
+$("tablePage")
+.classList.add("active");
+
+$("tableTitle").textContent=
+c.name;
+
+renderTable();
+
+}
+
+
+/* =========================
+   RENDER CARDS
+========================= */
+
+function renderCards(){
+
+const wrap=
+$("cards");
+
+wrap.innerHTML="";
+
+const q=
+String(
+$("globalSearch")?.value||""
+)
+.toLowerCase()
+.trim();
+
+let cards=
+data.cards.filter(c=>
+!q ||
+String(c.name||"")
+.toLowerCase()
+.includes(q)
+);
+
+$("cardCount").textContent=
+bn(cards.length);
+
+if(!cards.length){
+
+wrap.innerHTML=`
+<div class="empty">
+কোনো কার্ড পাওয়া যায়নি।
+</div>
+`;
+
+return;
+
+}
+
+cards.forEach(c=>{
+
+normalizeLinkCard(c);
+normalizeMediaCard(c);
+
+let div=
+document.createElement("div");
+
+div.className="card";
+
+div.style.background=
+c.color||"#fff";
+
+div.innerHTML=`
+
+<div class="card-icon">
+${iconHTML(c.icon)}
+</div>
+
+<h3>
+${esc(c.name)}
+</h3>
+
+<button
+class="dots"
+type="button">
+⋮
+</button>
+
+<div class="menu-pop">
+
+<button
+data-action="open">
+👁️ দেখুন
+</button>
+
+</div>
+
+`;
+
+div.onclick=e=>{
+
+if(
+e.target.closest(".dots") ||
+e.target.closest(".menu-pop")
+){
+
+return;
+
+}
+
+openCard(c.id);
+
+};
+
+const dots=
+div.querySelector(".dots");
+
+const menu=
+div.querySelector(".menu-pop");
+
+dots.onclick=e=>{
+
+e.stopPropagation();
+
+menu.style.display=
+menu.style.display==="block"
+?"none"
+:"block";
+
+};
+
+menu.querySelector(
+'[data-action="open"]'
+).onclick=e=>{
+
+e.stopPropagation();
+
+openCard(c.id);
+
+};
+
+wrap.appendChild(div);
+
+});
+
+}
+
+
+/* =========================
+   BANGLA NUMBER
+========================= */
+
+function bn(n){
+
+return String(n).replace(
+/\d/g,
+d=>"০১২৩৪৫৬৭৮৯"[d]
+);
+
+}
+
+
+/* =========================
+   DATE
+========================= */
+
+const MONTHS=[
+"জানুয়ারি",
+"ফেব্রুয়ারি",
+"মার্চ",
+"এপ্রিল",
+"মে",
+"জুন",
+"জুলাই",
+"আগস্ট",
+"সেপ্টেম্বর",
+"অক্টোবর",
+"নভেম্বর",
+"ডিসেম্বর"
+];
+
+
+function dateInfo(v){
+
+let s=
+String(v||"").trim();
+
+if(!s)
+return null;
+
+let d=
+null;
+
+if(
+/^\d{4}-\d{2}-\d{2}$/.test(s)
+){
+
+let p=s.split("-");
+
+d=new Date(
+Number(p[0]),
+Number(p[1])-1,
+Number(p[2])
+);
+
+}else{
+
+let m=
+s.match(
+/^(\d{1,2})-(\d{1,2})-(\d{4})$/
+);
+
+if(m){
+
+d=new Date(
+Number(m[3]),
+Number(m[2])-1,
+Number(m[1])
+);
+
+}
+
+}
+
+if(
+!d ||
+isNaN(d.getTime())
+)
+return null;
+
+return {
+
+year:
+d.getFullYear(),
+
+month:
+d.getMonth(),
+
+day:
+d.getDate(),
+
+date:
+String(d.getDate())
+.padStart(2,"0")
++"-"+
+String(d.getMonth()+1)
+.padStart(2,"0")
++"-"+
+d.getFullYear()
+
+};
+
+}
+
+
+/* =========================
+   LINK HEADER
+========================= */
+
+function isLinkHeader(h){
+
+return /^(লিংক|link)(?:\s*(নাম|name))?$/i
+.test(String(h).trim())
+||
+/লিংক/i.test(String(h));
+
+}
+
+
+/* =========================
+   MONEY
+========================= */
+
+function isMoneyHeader(h){
+
+return /টাকা|মূল্য|দাম|খরচ|amount|price|taka|money/i
+.test(String(h||""));
+
+}
+
+
+/* =========================
+   GB
+========================= */
+
+function isGBHeader(h){
+
+return /জিবি|gb|g\.b\.|gigabyte/i
+.test(String(h||""));
+
+}
+
+
+/* =========================
+   LINK CARD
+========================= */
+
+function renderLinkCard(c){
+
+const sections=
+document.createElement("div");
+
+sections.className=
+"link-grid";
+
+let rows=
+Array.isArray(c.rows)
+?c.rows
+:[];
+
+if(!rows.length){
+
+sections.innerHTML=`
+<div class="link-empty">
+কোনো লিংক নেই।
+</div>
+`;
+
+$("tableSections")
+.appendChild(sections);
+
+return;
+
+}
+
+rows.forEach((r,i)=>{
+
+let name=
+r["নাম"]||
+r["Name"]||
+r["name"]||
+"লিংক";
+
+let url="";
+
+for(
+const h of c.headers
+){
+
+if(isLinkHeader(h)){
+
+url=
+r[h]||"";
+
+break;
+
+}
+
+}
+
+if(!url){
+
+for(
+const k of Object.keys(r)
+){
+
+if(
+/https?:\/\//i.test(
+String(r[k]||"")
+)
+){
+
+url=r[k];
+
+break;
+
+}
+
+}
+
+}
+
+let tile=
+document.createElement("div");
+
+tile.className=
+"link-tile";
+
+tile.innerHTML=`
+
+<div class="video-icon">
+▶
+</div>
+
+<div class="link-tile-name">
+${esc(name)}
+</div>
+
+<div class="link-tile-url">
+${esc(url)}
+</div>
+
+`;
+
+tile.onclick=()=>{
+
+if(url){
+
+window.open(
+url,
+"_blank"
+);
+
+}
+
+};
+
+sections.appendChild(tile);
+
+});
+
+$("tableSections")
+.appendChild(sections);
+
+}
+
+
+/* =========================
+   MEDIA
+========================= */
+
+function renderMediaCard(c){
+
+const type=
+mediaType(c);
+
+const rows=
+Array.isArray(c.rows)
+?c.rows
+:[];
+
+if(!rows.length){
+
+$("tableSections").innerHTML=`
+<div class="media-empty">
+কোনো মিডিয়া তথ্য নেই।
+</div>
+`;
+
+return;
+
+}
+
+let groups={};
+
+rows.forEach((r,i)=>{
+
+let date="";
+
+for(const h of c.headers){
+
+if(
+/তারিখ|date/i.test(h)
+){
+
+date=
+r[h]||"";
+
+break;
+
+}
+
+}
+
+let di=
+dateInfo(date);
+
+let key=
+di
+?`${di.year}-${di.month}`
+:"unknown";
+
+if(!groups[key]){
+
+groups[key]={
+label:
+di
+?`${MONTHS[di.month]} - ${di.year}`
+:"অন্যান্য",
+rows:[]
+};
+
+}
+
+groups[key].rows.push({
+r,
+i,
+date:di
+});
+
+});
+
+const mode=
+document.createElement("div");
+
+mode.className=
+"media-mode";
+
+Object.keys(groups)
+.sort((a,b)=>{
+
+if(a==="unknown")
+return 1;
+
+if(b==="unknown")
+return -1;
+
+let [ay,am]=
+a.split("-").map(Number);
+
+let [by,bm]=
+b.split("-").map(Number);
+
+return (
+by*12+bm
+)-
+(
+ay*12+am
+);
+
+})
+.forEach(key=>{
+
+const group=
+groups[key];
+
+let monthBox=
+document.createElement("div");
+
+monthBox.className=
+"media-month";
+
+monthBox.innerHTML=`
+
+<div class="media-date">
+${esc(group.label)}
+</div>
+
+<div class="media-grid">
+</div>
+
+`;
+
+const grid=
+monthBox.querySelector(
+".media-grid"
+);
+
+group.rows.forEach(item=>{
+
+const r=item.r;
+const i=item.i;
+
+let name=
+r["নাম"]||
+r["Name"]||
+r["name"]||
+"মিডিয়া";
+
+let url="";
+
+for(const h of c.headers){
+
+if(isLinkHeader(h)){
+
+url=
+String(r[h]||"");
+
+break;
+
+}
+
+}
+
+if(!url){
+
+for(const k of Object.keys(r)){
+
+if(
+/^https?:\/\//i.test(
+String(r[k]||"")
+)
+){
+
+url=
+String(r[k]);
+
+break;
+
+}
+
+}
+
+}
+
+let tile=
+document.createElement("div");
+
+tile.className=
+"media-tile";
+
+tile.innerHTML=`
+
+<div class="media-tile-head">
+${esc(name)}
+</div>
+
+<div class="media-thumb-wrap">
+</div>
+
+`;
+
+const thumb=
+tile.querySelector(
+".media-thumb-wrap"
+);
+
+if(type==="image"){
+
+if(url){
+
+thumb.innerHTML=`
+<img
+class="media-thumb"
+src="${esc(url)}"
+alt="${esc(name)}"
+onerror="
+this.style.display='none';
+this.parentElement.innerHTML='🖼️';
+">
+`;
+
+}else{
+
+thumb.innerHTML=
+`<div class="media-play">🖼️</div>`;
+
+}
+
+}else if(type==="video"){
+
+if(url){
+
+thumb.innerHTML=`
+<video
+src="${esc(url)}"
+controls
+preload="metadata">
+</video>
+`;
+
+}else{
+
+thumb.innerHTML=
+`<div class="media-play">▶️</div>`;
+
+}
+
+}else if(type==="audio"){
+
+if(url){
+
+thumb.innerHTML=`
+<div style="
+width:100%;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:12px;
+">
+
+<div
+class="media-play"
+style="margin-bottom:8px">
+🎵
+</div>
+
+</div>
+`;
+
+const audio=
+document.createElement("audio");
+
+audio.className=
+"media-audio";
+
+audio.controls=true;
+
+audio.src=url;
+
+tile.appendChild(audio);
+
+}else{
+
+thumb.innerHTML=
+`<div class="media-play">🎵</div>`;
+
+}
+
+}
+
+tile.onclick=e=>{
+
+if(
+e.target.closest("audio") ||
+e.target.closest("video")
+){
+
+return;
+
+}
+
+if(url){
+
+openMediaLightbox(
+type,
+url,
+name
+);
+
+}
+
+};
+
+grid.appendChild(tile);
+
+});
+
+mode.appendChild(monthBox);
+
+});
+
+$("tableSections")
+.appendChild(mode);
+
+}
+
+
+/* =========================
+   NORMAL TABLE
+========================= */
+
+function renderNormalTable(c){
+
+let rows=
+Array.isArray(c.rows)
+?c.rows
+:[];
+
+let wrap=
+document.createElement("div");
+
+wrap.className=
+"table-wrap";
+
+let html=`
+
+<table>
+
+<thead>
+
+<tr>
+`;
+
+c.headers.forEach(h=>{
+
+html+=`
+<th>
+${esc(h)}
+</th>
+`;
+
+});
+
+html+=`
+<th class="action">
+Action
+</th>
+</tr>
+
+</thead>
+
+<tbody>
+`;
+
+rows.forEach((r,i)=>{
+
+html+=`
+<tr>
+`;
+
+c.headers.forEach(h=>{
+
+let v=
+r[h]||"";
+
+html+=`
+<td>
+`;
+
+if(
+isLinkHeader(h) &&
+/^https?:\/\//i.test(v)
+){
+
+html+=`
+<a
+href="${esc(v)}"
+target="_blank">
+🔗
+</a>
+`;
+
+}else{
+
+html+=esc(v);
+
+}
+
+html+=`
+</td>
+`;
+
+});
+
+html+=`
+<td class="action">
+
+<button
+class="act"
+onclick="viewRow(${i})">
+${actionIconHTML("view")}
+</button>
+`;
+
+let mobileHeader=
+c.headers.some(h=>
+/মোবাইল|mobile|phone|ফোন/i.test(h)
+);
+
+if(mobileHeader){
+
+let mobileValue="";
+
+for(const h of c.headers){
+
+if(
+/মোবাইল|mobile|phone|ফোন/i.test(h)
+){
+
+mobileValue=
+r[h]||"";
+
+break;
+
+}
+
+}
+
+if(mobileValue){
+
+html+=`
+
+<a
+class="act"
+href="tel:${esc(mobileValue)}">
+${actionIconHTML("call")}
+</a>
+
+`;
+
+}
+
+}
+
+html+=`
+</td>
+
+</tr>
+`;
+
+});
+
+if(!rows.length){
+
+html+=`
+<tr>
+
+<td
+colspan="${c.headers.length+1}"
+class="empty">
+
+কোনো তথ্য নেই।
+
+</td>
+
+</tr>
+`;
+
+}
+
+html+=`
+</tbody>
+</table>
+`;
+
+wrap.innerHTML=
+html;
+
+$("tableSections")
+.appendChild(wrap);
+
+}
+
+
+/* =========================
+   VIEW ROW
+========================= */
+
+function viewRow(i){
+
+const c=
+data.cards.find(
+x=>x.id===currentId
+);
+
+if(!c)
+return;
+
+const r=
+c.rows[i];
+
+if(!r)
+return;
+
+let html="";
+
+c.headers.forEach(h=>{
+
+html+=`
+<div style="
+padding:10px 0;
+border-bottom:1px solid #e5edf3;
+">
+
+<div style="
+font-size:12px;
+color:#708596;
+font-weight:800;
+margin-bottom:4px">
+${esc(h)}
+</div>
+
+<div style="
+font-size:16px;
+color:#17324d">
+${isLinkHeader(h) && /^https?:\/\//i.test(String(r[h]||""))
+?`<a href="${esc(r[h])}" target="_blank">🔗 লিংক খুলুন</a>`
+:esc(r[h]||"")}
+</div>
+
+</div>
+`;
+
+});
+
+const box=
+document.createElement("div");
+
+box.style.cssText=`
+position:fixed;
+inset:0;
+background:#0008;
+z-index:1000;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:18px;
+`;
+
+box.innerHTML=`
+
+<div style="
+width:min(520px,95vw);
+max-height:88vh;
+overflow:auto;
+background:#fff;
+border-radius:14px;
+padding:20px;
+box-shadow:0 15px 50px #0005">
+
+<h3 style="
+margin:0 0 15px;
+color:#07579f">
+তথ্য দেখুন
+</h3>
+
+<div>
+${html}
+</div>
+
+<div style="
+display:flex;
+justify-content:flex-end;
+margin-top:16px">
+
+<button
+class="back"
+type="button">
+বন্ধ করুন
+</button>
+
+</div>
+
+</div>
+`;
+
+box.querySelector(
+"button"
+).onclick=()=>{
+
+box.remove();
+
+};
+
+box.addEventListener(
+"click",
+e=>{
+
+if(e.target===box)
+box.remove();
+
+});
+
+document.body.appendChild(box);
+
+}
+
+
+/* =========================
+   RENDER TABLE
+========================= */
+
+function renderTable(){
+
+const c=
+data.cards.find(
+x=>x.id===currentId
+);
+
+if(!c)
+return;
+
+$("tableTitle").textContent=
+c.name;
+
+$("tableSections")
+.innerHTML="";
+
+normalizeLinkCard(c);
+
+normalizeMediaCard(c);
+
+if(isLinkCard(c)){
+
+renderLinkCard(c);
+
+return;
+
+}
+
+if(isMediaCard(c)){
+
+renderMediaCard(c);
+
+return;
+
+}
+
+renderNormalTable(c);
+
+}
+
+
+/* =========================
+   MEDIA LIGHTBOX
+========================= */
+
+function openMediaLightbox(
+type,
+url,
+name
+){
+
+const body=
+$("mediaLightboxBody");
+
+body.innerHTML="";
+
+$("mediaLightboxName")
+.textContent=name||"";
+
+if(type==="image"){
+
+body.innerHTML=`
+<img
+src="${esc(url)}"
+alt="${esc(name)}">
+`;
+
+}else if(type==="video"){
+
+body.innerHTML=`
+<video
+src="${esc(url)}"
+controls
+autoplay>
+</video>
+`;
+
+}else{
+
+body.innerHTML=`
+<audio
+src="${esc(url)}"
+controls
+autoplay>
+</audio>
+`;
+
+}
+
+$("mediaLightbox")
+.classList.add("show");
+
+}
+
+
+function closeMediaLightbox(){
+
+$("mediaLightbox")
+.classList.remove("show");
+
+$("mediaLightboxBody")
+.innerHTML="";
+
+}
+
+
+$("mediaClose")
+.onclick=
+closeMediaLightbox;
+
+$("mediaLightbox")
+.addEventListener(
+"click",
+e=>{
+
+if(
+e.target===
+$("mediaLightbox")
+){
+
+closeMediaLightbox();
+
+}
+
+});
+
+
+/* =========================
+   BACK
+========================= */
+
+$("back").onclick=()=>{
+
+currentId=null;
+
+$("tablePage")
+.classList.remove("active");
+
+$("dashboard")
+.classList.add("active");
+
+renderCards();
+
+};
+
+
+/* =========================
+   MENU
+========================= */
+
+$("menu").onclick=()=>{
+
+$("sidebar")
+.classList.toggle("open");
+
+};
+
+
+/* =========================
+   GLOBAL SEARCH
+========================= */
+
+$("globalSearch")
+.addEventListener(
+"input",
+renderCards
+);
+
+
+/* =========================
+   TABLE SEARCH
+========================= */
+
+$("tableSearch")
+?.addEventListener(
+"input",
+()=>{
+
+const q=
+String(
+$("tableSearch").value||""
+)
+.toLowerCase()
+.trim();
+
+document
+.querySelectorAll(
+"#tableSections tbody tr"
+)
+.forEach(tr=>{
+
+tr.style.display=
+!q ||
+tr.textContent
+.toLowerCase()
+.includes(q)
+?""
+:"none";
+
+});
+
+});
+
+
+/* =========================
+   NAV
+========================= */
+
+document
+.querySelectorAll(
+".nav button[data-page]"
+)
+.forEach(btn=>{
+
+btn.onclick=()=>{
+
+document
+.querySelectorAll(
+".nav button[data-page]"
+)
+.forEach(x=>
+x.classList.remove("active")
+);
+
+btn.classList.add("active");
+
+document
+.querySelectorAll(".page")
+.forEach(p=>
+p.classList.remove("active")
+);
+
+let page=
+btn.dataset.page;
+
+if(page==="dashboard"){
+
+$("dashboard")
+.classList.add("active");
+
+}else{
+
+$("settings")
+.classList.add("active");
+
+}
+
+$("sidebar")
+.classList.remove("open");
+
+};
+
+});
+
+
+/* =========================
+   INIT
+========================= */
+
+ensureGmailCard();
+
+renderCards();
+
+
+/* =========================
+   CLOSE POPUPS
+========================= */
+
+document.addEventListener(
+"click",
+e=>{
+
+document
+.querySelectorAll(
+".menu-pop"
+)
+.forEach(m=>{
+
+if(!m.contains(e.target))
+m.style.display="none";
+
+});
+
+});
+
+
+</script>
+
+</body>
+</html>
