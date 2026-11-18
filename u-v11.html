@@ -1,0 +1,3373 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SOROLIPI - User / View Panel</title>
+
+<style>
+
+*{
+box-sizing:border-box
+}
+
+body{
+margin:0;
+font-family:
+Arial,
+"Noto Sans Bengali",
+sans-serif;
+background:#f5f8fc;
+color:#17324d
+}
+
+button,
+input{
+font:inherit
+}
+
+.hidden{
+display:none!important
+}
+
+.sidebar{
+position:fixed;
+left:0;
+top:0;
+bottom:0;
+width:250px;
+background:#07579f;
+color:#fff;
+padding:18px 14px;
+z-index:30;
+transition:.25s
+}
+
+.logo{
+font-size:26px;
+font-weight:800;
+padding:8px 10px 24px
+}
+
+.nav button{
+display:block;
+width:100%;
+border:0;
+background:transparent;
+color:#fff;
+text-align:left;
+padding:13px;
+border-radius:9px;
+margin:5px 0;
+cursor:pointer
+}
+
+.nav button:hover,
+.nav button.active{
+background:#2389e4
+}
+
+.main{
+margin-left:250px;
+min-height:100vh
+}
+
+.top{
+height:66px;
+background:#fff;
+border-bottom:1px solid #dce7f1;
+display:flex;
+align-items:center;
+padding:0 20px;
+gap:15px;
+position:sticky;
+top:0;
+z-index:20
+}
+
+.menu{
+border:0;
+background:transparent;
+color:#07579f;
+font-size:25px;
+cursor:pointer
+}
+
+.brand{
+font-weight:800;
+color:#07579f;
+font-size:22px
+}
+
+.search{
+margin-left:auto
+}
+
+.search input{
+width:260px;
+padding:9px 12px;
+border:1px solid #ccdbea;
+border-radius:8px
+}
+
+.content{
+padding:25px
+}
+
+.welcome h1{
+margin:0 0 5px;
+color:#174c7c
+}
+
+.welcome p{
+margin:0;
+color:#627789
+}
+
+.section{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin:25px 0 15px
+}
+
+.section h2{
+margin:0;
+font-size:28px
+}
+
+.count b{
+color:#e33d3d
+}
+
+/* MAIN CARD: 2 CARDS PER ROW */
+.cards{
+display:grid;
+grid-template-columns:repeat(2,minmax(0,1fr));
+gap:17px
+}
+
+.add,
+.card{
+min-height:140px;
+border-radius:14px;
+display:flex;
+align-items:center;
+justify-content:center;
+position:relative;
+cursor:pointer;
+border:1px solid #d6e3ee;
+box-shadow:0 3px 12px #194c7112
+}
+
+.card{
+justify-content:flex-start;
+padding:20px
+}
+
+.card h3{
+margin:0;
+font-size:22px
+}
+
+.card .card-icon{
+width:52px;
+height:52px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:34px;
+margin-right:12px
+}
+
+.card .card-icon img{
+width:100%;
+height:100%;
+object-fit:contain
+}
+
+.dots{
+position:absolute;
+right:8px;
+top:5px;
+border:0;
+background:transparent;
+font-size:25px;
+cursor:pointer;
+color:#536b7d
+}
+
+.menu-pop{
+display:none;
+position:absolute;
+right:8px;
+top:38px;
+background:#fff;
+border:1px solid #dbe6ef;
+box-shadow:0 7px 25px #0002;
+border-radius:8px;
+overflow:hidden;
+z-index:10
+}
+
+.menu-pop button{
+border:0;
+background:#fff;
+padding:10px 15px;
+width:100%;
+cursor:pointer;
+text-align:left
+}
+
+.page{
+display:none
+}
+
+.page.active{
+display:block
+}
+
+.table-head{
+background:#fff;
+border:1px solid #dbe6ef;
+border-radius:12px;
+padding:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px
+}
+
+.back{
+border:0;
+background:#eef5fa;
+color:#07579f;
+padding:9px 13px;
+border-radius:8px;
+font-weight:700;
+cursor:pointer
+}
+
+.table-search{
+margin-left:auto
+}
+
+.table-search input{
+padding:9px 12px;
+border:1px solid #ccdbea;
+border-radius:8px
+}
+
+.table-wrap{
+margin-top:15px;
+background:#fff;
+border:1px solid #dbe6ef;
+border-radius:12px;
+overflow:auto
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+min-width:700px
+}
+
+th,
+td{
+padding:10px;
+border-bottom:1px solid #e5edf3;
+border-right:1px solid #e5edf3;
+text-align:left;
+vertical-align:middle
+}
+
+th{
+background:#edf5fa;
+font-weight:800
+}
+
+.action{
+white-space:nowrap;
+text-align:center
+}
+
+.act{
+width:38px;
+height:34px;
+display:inline-flex;
+align-items:center;
+justify-content:center;
+padding:5px;
+font-size:20px;
+line-height:1;
+vertical-align:middle;
+border:1px solid #d8e4ed;
+background:#fff;
+border-radius:7px;
+cursor:pointer
+}
+
+.action-icon-img{
+width:24px;
+height:24px;
+object-fit:contain;
+display:block
+}
+
+.money-total{
+font-weight:900;
+color:#d62424;
+font-size:16px
+}
+
+.plus-value{
+color:#0a9f2e;
+font-weight:900;
+font-size:17px;
+}
+
+.minus-value{
+color:#e00000;
+font-weight:900;
+font-size:17px;
+}
+
+.empty{
+padding:30px;
+text-align:center;
+color:#718596
+}
+
+.link-grid{
+display:grid;
+grid-template-columns:repeat(4,minmax(0,1fr));
+gap:10px
+}
+
+.link-tile{
+min-height:95px;
+background:#fff;
+border:1px solid #d9e5ee;
+border-radius:11px;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:9px;
+position:relative;
+cursor:pointer
+}
+
+.video-icon{
+width:36px;
+height:36px;
+border-radius:50%;
+background:#e9f2f8;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:19px;
+margin-bottom:6px
+}
+
+.link-tile-name{
+font-size:13px;
+font-weight:800;
+color:#17324d;
+word-break:break-word
+}
+
+.link-tile-url{
+font-size:10px;
+color:#74899a;
+word-break:break-all;
+margin-top:4px
+}
+
+
+/* MEDIA */
+
+.media-mode{
+margin-top:0
+}
+
+.media-month{
+margin:0 0 22px;
+background:#fff;
+border:1px solid #dbe6ef;
+border-radius:13px;
+padding:14px
+}
+
+.media-date{
+font-size:19px;
+font-weight:900;
+color:#07579f;
+margin-bottom:12px
+}
+
+.media-grid{
+display:grid;
+grid-template-columns:repeat(4,minmax(0,1fr));
+gap:12px
+}
+
+.media-tile{
+background:#fff;
+border:1px solid #d9e5ee;
+border-radius:12px;
+overflow:hidden;
+box-shadow:0 3px 12px #194c7112;
+min-width:0;
+cursor:pointer
+}
+
+.media-tile-head{
+padding:9px 10px;
+font-weight:800;
+color:#17324d;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis
+}
+
+.media-thumb-wrap{
+aspect-ratio:16/10;
+background:#edf3f8;
+display:flex;
+align-items:center;
+justify-content:center;
+overflow:hidden
+}
+
+.media-thumb{
+width:100%;
+height:100%;
+object-fit:cover;
+display:block
+}
+
+.media-tile video{
+width:100%;
+height:100%;
+object-fit:cover;
+display:block
+}
+
+.media-audio{
+width:calc(100% - 16px);
+margin:8px
+}
+
+.media-play{
+font-size:38px;
+line-height:1
+}
+
+.media-empty{
+padding:25px;
+text-align:center;
+color:#667b8c;
+background:#fff;
+border:1px dashed #cbdbe7;
+border-radius:12px
+}
+
+.media-lightbox{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.82);
+z-index:9999;
+align-items:center;
+justify-content:center;
+padding:20px
+}
+
+.media-lightbox.show{
+display:flex
+}
+
+.media-lightbox-inner{
+position:relative;
+max-width:min(94vw,1000px);
+max-height:92vh;
+width:100%;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center
+}
+
+.media-lightbox img,
+.media-lightbox video{
+max-width:94vw;
+max-height:78vh;
+border-radius:10px;
+background:#000;
+object-fit:contain
+}
+
+.media-lightbox audio{
+width:min(760px,90vw)
+}
+
+.media-lightbox-name{
+color:#fff;
+font-size:18px;
+font-weight:800;
+margin-top:10px;
+text-align:center
+}
+
+.media-close{
+position:absolute;
+right:-4px;
+top:-42px;
+width:38px;
+height:38px;
+border:0;
+border-radius:50%;
+background:#fff;
+color:#222;
+font-size:28px;
+line-height:1;
+cursor:pointer
+}
+
+@media(max-width:900px){
+
+.media-grid{
+grid-template-columns:repeat(3,minmax(0,1fr))
+}
+
+}
+
+@media(max-width:800px){
+
+.sidebar{
+transform:translateX(-100%)
+}
+
+.sidebar.open{
+transform:translateX(0)
+}
+
+.main{
+margin-left:0
+}
+
+.menu{
+display:block
+}
+
+.link-grid{
+grid-template-columns:repeat(4,minmax(0,1fr));
+gap:8px
+}
+
+.link-tile{
+min-height:92px;
+padding:8px 4px
+}
+
+.video-icon{
+width:32px;
+height:32px;
+font-size:17px
+}
+
+.link-tile-name{
+font-size:12px
+}
+
+.link-tile-url{
+font-size:9px
+}
+
+}
+
+@media(max-width:600px){
+
+.media-grid{
+grid-template-columns:repeat(2,minmax(0,1fr));
+gap:8px
+}
+
+.media-month{
+padding:10px
+}
+
+.media-date{
+font-size:17px
+}
+
+.media-tile-head{
+font-size:12px;
+padding:7px
+}
+
+.media-close{
+right:0
+}
+
+}
+
+@media(max-width:480px){
+
+.search{
+display:none
+}
+
+/* MOBILE MAIN CARDS: STILL 2 PER ROW */
+.cards{
+grid-template-columns:repeat(2,minmax(0,1fr));
+gap:10px
+}
+
+.card{
+min-height:112px;
+padding:12px 10px
+}
+
+.card .card-icon{
+width:38px;
+height:38px;
+font-size:26px;
+margin-right:8px
+}
+
+.card h3{
+font-size:18px
+}
+
+.gmail-name{
+font-size:23px
+}
+
+.link-grid{
+grid-template-columns:repeat(4,minmax(0,1fr));
+gap:6px
+}
+
+.link-tile{
+min-height:82px;
+border-radius:9px
+}
+
+.video-icon{
+width:28px;
+height:28px;
+font-size:15px;
+margin-bottom:5px
+}
+
+.link-tile-name{
+font-size:10px
+}
+
+.link-tile-url{
+display:none
+}
+
+}
+
+
+/* SIDEBAR FIX */
+
+#sidebarOverlay{
+display:none;
+}
+
+@media (max-width:800px){
+
+#sidebar{
+position:fixed !important;
+left:0 !important;
+top:0 !important;
+bottom:0 !important;
+z-index:10002 !important;
+transform:translate3d(-110%,0,0) !important;
+transition:transform .25s ease !important;
+visibility:visible !important;
+will-change:transform;
+}
+
+#sidebar.open{
+transform:translate3d(0,0,0) !important;
+}
+
+#sidebarOverlay{
+display:none;
+position:fixed;
+inset:0;
+z-index:10000;
+background:rgba(0,0,0,.38);
+-webkit-tap-highlight-color:transparent;
+}
+
+#sidebarOverlay.active{
+display:block;
+}
+
+.top{
+position:sticky;
+z-index:10001 !important;
+}
+
+#menu{
+display:block !important;
+position:relative;
+z-index:10003 !important;
+pointer-events:auto !important;
+touch-action:manipulation;
+}
+
+.main{
+margin-left:0 !important;
+width:100% !important;
+}
+
+}
+
+@media (min-width:801px){
+
+#sidebar{
+transform:none !important;
+visibility:visible !important;
+}
+
+#sidebarOverlay{
+display:none !important;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="app">
+
+<aside id="sidebar" class="sidebar">
+
+<div class="logo">
+▣ SOROLIPI
+</div>
+
+<nav class="nav">
+
+<button data-page="dashboard" class="active">
+⌂ &nbsp; ড্যাশবোর্ড
+</button>
+
+<button data-page="settings">
+⚙ &nbsp; সিটিং
+</button>
+
+<button id="logout">
+⇥ &nbsp; লগআউট
+</button>
+
+</nav>
+
+</aside>
+
+<main class="main">
+
+<header class="top">
+
+<button id="menu" class="menu">
+☰
+</button>
+
+<div class="brand">
+SOROLIPI
+</div>
+
+<div class="search">
+
+<input id="globalSearch"
+placeholder="কার্ড সার্চ করুন...">
+
+</div>
+
+</header>
+
+<section class="content">
+
+<div id="dashboard" class="page active">
+
+<div class="welcome">
+
+<h1>
+স্বাগতম, SOROLIPI
+</h1>
+
+<p>
+সহজে তথ্য দেখুন।
+</p>
+
+</div>
+
+<div class="section">
+
+<h2>
+কার্ডসমূহ
+</h2>
+
+<div class="count">
+মোট কার্ড <b id="cardCount">০</b>
+</div>
+
+</div>
+
+<div id="cards" class="cards">
+</div>
+
+</div>
+
+
+<div id="tablePage" class="page">
+
+<div class="table-head">
+
+<div>
+
+<button id="back" class="back">
+← সকল কার্ড
+</button>
+
+<h2 id="tableTitle" style="margin:12px 0 0">
+</h2>
+
+</div>
+
+<div class="table-search">
+
+<input id="tableSearch"
+placeholder="তথ্য সার্চ করুন...">
+
+</div>
+
+</div>
+
+<div id="tableSections">
+</div>
+
+</div>
+
+
+<div id="settings" class="page">
+
+<div class="welcome">
+
+<h2>
+সিটিং
+</h2>
+
+<p>
+User Panel-এর জন্য প্রয়োজনীয় সেটিং।
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+
+<!-- CARD PASSWORD MODAL -->
+
+<div id="cardPasswordModal"
+class="media-lightbox"
+style="background:rgba(0,0,0,.58);">
+
+<div style="
+max-width:430px;
+width:100%;
+background:#fff;
+border-radius:16px;
+padding:22px;
+box-shadow:0 15px 45px rgba(0,0,0,.25);
+">
+
+<h3 id="cardPasswordTitle"
+style="margin:0 0 8px;color:#07579f;font-size:21px;">
+কার্ড পাসওয়ার্ড
+</h3>
+
+<p style="
+margin:0 0 16px;
+color:#627789;
+font-size:14px;
+">
+এই কার্ডে প্রবেশ করতে পাসওয়ার্ড দিন।
+</p>
+
+<input
+id="cardPasswordInput"
+type="password"
+autocomplete="off"
+placeholder="পাসওয়ার্ড লিখুন"
+style="
+width:100%;
+padding:11px 12px;
+border:1px solid #ccdbea;
+border-radius:9px;
+outline:none;
+">
+
+<div id="cardPasswordError"
+style="
+display:none;
+color:#d62424;
+font-weight:700;
+margin-top:8px;">
+পাসওয়ার্ড সঠিক নয়।
+</div>
+
+<div style="
+display:flex;
+justify-content:flex-end;
+gap:9px;
+margin-top:17px;
+">
+
+<button id="cardPasswordCancel"
+class="back"
+type="button">
+বাতিল
+</button>
+
+<button id="cardPasswordEnter"
+type="button"
+style="
+border:0;
+background:#07579f;
+color:#fff;
+padding:9px 15px;
+border-radius:8px;
+font-weight:800;
+cursor:pointer;">
+প্রবেশ করুন
+</button>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- MEDIA LIGHTBOX -->
+
+<div id="mediaLightbox"
+class="media-lightbox">
+
+<div class="media-lightbox-inner">
+
+<button id="mediaClose"
+class="media-close"
+type="button">
+×
+</button>
+
+<div id="mediaLightboxBody">
+</div>
+
+<div id="mediaLightboxName"
+class="media-lightbox-name">
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+const $=
+id=>document.getElementById(id);
+
+const KEY=
+"SOROLIPI_DATA_V2";
+
+
+let data={
+cards:[]
+};
+
+let currentId=
+null;
+
+
+/* LOAD DATA */
+
+try{
+
+const saved=
+localStorage.getItem(KEY);
+
+if(saved){
+
+const parsed=
+JSON.parse(saved);
+
+if(
+parsed &&
+Array.isArray(parsed.cards)
+){
+
+data=parsed;
+
+}
+
+}
+
+}catch(e){
+
+data={
+cards:[]
+};
+
+}
+
+
+/* ESC */
+
+function esc(s){
+
+return String(s??"")
+.replace(/[&<>"']/g,m=>({
+
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#39;"
+
+}[m]));
+
+}
+
+
+/* ICON */
+
+function isImageIcon(v){
+
+return /^(https?:\/\/|data:image\/)/i
+.test(String(v||"").trim());
+
+}
+
+function iconHTML(v){
+
+let s=
+String(v||"").trim();
+
+if(!s)
+return "📁";
+
+if(isImageIcon(s)){
+
+return `
+<img
+src="${esc(s)}"
+alt=""
+onerror="this.outerHTML='📁'">
+`;
+
+}
+
+return esc(s);
+
+}
+
+
+/* BANGLA NUMBER */
+
+function bn(v){
+
+return String(v??"")
+.replace(
+/\d/g,
+d=>"০১২৩৪৫৬৭৮৯"[d]
+);
+
+}
+
+
+/* ACTION ICON */
+
+function actionIconHTML(type){
+
+const icons={
+view:"👁️",
+call:"📞"
+};
+
+return icons[type]||"";
+
+}
+
+
+/* LINK CARD */
+
+function normalizeLinkCard(c){
+
+const name=
+String(c.name||"").trim();
+
+if(
+/লিংক$|link$/i.test(name)
+){
+
+c.linkMode=true;
+
+}
+
+}
+
+
+/* MEDIA CARD */
+
+function normalizeMediaCard(c){
+
+const name=
+String(c.name||"").trim();
+
+if(
+/ছবি|image|photo/i.test(name)
+){
+
+c.mediaType="image";
+
+}else if(
+/ভিডিও|video/i.test(name)
+){
+
+c.mediaType="video";
+
+}else if(
+/অডিও|audio/i.test(name)
+){
+
+c.mediaType="audio";
+
+}
+
+}
+
+
+/* MEDIA TYPE */
+
+function isMediaCard(c){
+
+return !!(
+c &&
+(
+c.mediaType ||
+/ছবি|image|photo|ভিডিও|video|অডিও|audio/i
+.test(String(c.name||""))
+)
+);
+
+}
+
+function mediaType(c){
+
+if(c.mediaType)
+return c.mediaType;
+
+const n=
+String(c.name||"");
+
+if(/ভিডিও|video/i.test(n))
+return "video";
+
+if(/অডিও|audio/i.test(n))
+return "audio";
+
+return "image";
+
+}
+
+
+/* MEDIA URL */
+
+function mediaUrl(v){
+
+let s=
+String(v||"").trim();
+
+if(
+!/^https?:\/\//i.test(s) &&
+!/^data:/i.test(s)
+){
+
+return "";
+
+}
+
+return s;
+
+}
+
+
+/* RENDER CARDS */
+
+function renderCards(){
+
+const wrap=
+$("cards");
+
+wrap.innerHTML="";
+
+let q=
+String(
+$("globalSearch")?.value||""
+)
+.toLowerCase()
+.trim();
+
+let cards=
+data.cards.filter(c=>
+!q ||
+String(c.name||"")
+.toLowerCase()
+.includes(q)
+);
+
+$("cardCount")
+.textContent=
+String(cards.length)
+.replace(
+/\d/g,
+d=>"০১২৩৪৫৬৭৮৯"[d]
+);
+
+if(!cards.length){
+
+wrap.innerHTML=`
+<div class="empty">
+কোনো কার্ড পাওয়া যায়নি।
+</div>
+`;
+
+return;
+
+}
+
+cards.forEach(c=>{
+
+normalizeLinkCard(c);
+normalizeMediaCard(c);
+
+let div=
+document.createElement("div");
+
+div.className="card";
+
+div.style.background=
+c.color||"#fff";
+
+div.innerHTML=`
+
+<div style="
+display:flex;
+align-items:center;
+">
+
+<div class="card-icon">
+${iconHTML(c.icon)}
+</div>
+
+<h3>
+${esc(c.name)}
+</h3>
+
+</div>
+
+<button
+class="dots"
+type="button">
+⋮
+</button>
+
+<div class="menu-pop">
+
+<button
+data-action="open">
+দেখুন
+</button>
+
+</div>
+
+`;
+
+div.onclick=e=>{
+
+if(
+e.target.closest(".dots") ||
+e.target.closest(".menu-pop")
+){
+
+return;
+
+}
+
+openCard(c.id);
+
+};
+
+const dots=
+div.querySelector(".dots");
+
+const menu=
+div.querySelector(".menu-pop");
+
+dots.onclick=e=>{
+
+e.stopPropagation();
+
+menu.style.display=
+menu.style.display==="block"
+?"none"
+:"block";
+
+};
+
+menu.querySelector(
+'[data-action="open"]'
+).onclick=e=>{
+
+e.stopPropagation();
+
+openCard(c.id);
+
+};
+
+wrap.appendChild(div);
+
+});
+
+}
+
+
+/* CARD PASSWORD */
+
+let unlockedCardIds=
+new Set();
+
+let pendingCardId=
+null;
+
+function showCardPassword(id){
+
+pendingCardId=
+id;
+
+const c=
+data.cards.find(
+x=>x.id===id
+);
+
+$("cardPasswordTitle")
+.textContent=
+(c&&c.name?c.name:"কার্ড")
++
+" — পাসওয়ার্ড";
+
+$("cardPasswordInput")
+.value="";
+
+$("cardPasswordError")
+.style.display=
+"none";
+
+$("cardPasswordModal")
+.classList.add("show");
+
+setTimeout(
+()=>$("cardPasswordInput").focus(),
+50
+);
+
+}
+
+function closeCardPassword(){
+
+$("cardPasswordModal")
+.classList.remove("show");
+
+pendingCardId=
+null;
+
+}
+
+function enterCardPassword(){
+
+let c=
+data.cards.find(
+x=>x.id===pendingCardId
+);
+
+if(!c){
+
+closeCardPassword();
+return;
+
+}
+
+let p=
+String(c.password||"").trim();
+
+if(!p){
+
+closeCardPassword();
+openCard(c.id);
+return;
+
+}
+
+if(
+$("cardPasswordInput").value===p
+){
+
+unlockedCardIds.add(c.id);
+
+closeCardPassword();
+
+openCard(c.id);
+
+}else{
+
+$("cardPasswordError")
+.style.display=
+"block";
+
+$("cardPasswordInput")
+.focus();
+
+}
+
+}
+
+$("cardPasswordEnter")
+.onclick=
+enterCardPassword;
+
+$("cardPasswordCancel")
+.onclick=
+closeCardPassword;
+
+$("cardPasswordInput")
+.addEventListener(
+"keydown",
+e=>{
+
+if(e.key==="Enter")
+enterCardPassword();
+
+if(e.key==="Escape")
+closeCardPassword();
+
+}
+);
+
+
+/* OPEN CARD */
+
+function openCard(id){
+
+const c=
+data.cards.find(
+x=>x.id===id
+);
+
+if(!c)
+return;
+
+if(
+String(c.password||"").trim() &&
+!unlockedCardIds.has(id)
+){
+
+showCardPassword(id);
+
+return;
+
+}
+
+currentId=
+id;
+
+$("dashboard")
+.classList.remove("active");
+
+$("tablePage")
+.classList.add("active");
+
+$("tableTitle")
+textContent=
+c.name||"তথ্য";
+
+$("tableSearch")
+.value="";
+
+$("tableSections")
+.classList.remove(
+"media-mode"
+);
+
+$("tableSections")
+.classList.remove(
+"link-mode"
+);
+
+renderTable();
+
+}
+
+
+/* GLOBAL SEARCH */
+
+$("globalSearch")
+.addEventListener(
+"input",
+renderCards
+);
+
+$("tableSearch")
+.addEventListener(
+"input",
+()=>renderTable()
+);
+
+
+/* TOTAL */
+
+function isMoneyHeader(h){
+
+return /টাকা|মূল্য|দাম|খরচ|amount|price|taka|money/i
+.test(String(h||""));
+
+}
+
+function isGBHeader(h){
+
+return /জিবি|gb|g\.b\.|gigabyte/i
+.test(String(h||""));
+
+}
+
+function isTotalHeader(h){
+
+return isMoneyHeader(h) ||
+isGBHeader(h);
+
+}
+
+function toEnglishDigits(v){
+
+return String(v??"")
+.replace(
+/[০-৯]/g,
+d=>"০১২৩৪৫৬৭৮৯".indexOf(d)
+);
+
+}
+
+function totalNumber(v){
+
+let s=
+toEnglishDigits(v)
+.replace(
+/[, \s৳$]/g,
+""
+)
+.replace(
+/(?:gb|g\.b\.|জিবি|টাকা|৳|মূল্য|দাম)/gi,
+""
+)
+.trim();
+
+if(!s)
+return 0;
+
+let n=
+Number(s);
+
+return Number.isFinite(n)
+?n
+:0;
+
+}
+
+function totalText(v){
+
+return Number.isInteger(v)
+?
+String(v).replace(
+/\d/g,
+d=>"০১২৩৪৫৬৭৮৯"[d]
+)
+:
+String(
+Number(v)
+.toFixed(2)
+.replace(/\.00$/,"")
+)
+.replace(
+/\d/g,
+d=>"০১২৩৪৫৬৭৮৯"[d]
+);
+
+}
+
+
+/* PLUS / MINUS */
+
+function addRemoveHTML(value){
+
+let s=
+String(value??"");
+
+let t=
+s.trim();
+
+if(
+/^\+\s*[0-9০-৯]/
+.test(t)
+){
+
+return `
+<span class="plus-value">
+${esc(s)}
+</span>
+`;
+
+}
+
+if(
+/^-\s*[0-9০-৯]/
+.test(t)
+){
+
+return `
+<span class="minus-value">
+${esc(s)}
+</span>
+`;
+
+}
+
+return esc(s);
+
+}
+
+
+/* NAME-WISE RUNNING TOTAL */
+
+function isRunningTotalHeader(h){
+
+return /মোট|total|balance/i
+.test(String(h||""));
+
+}
+
+function isNameHeader(h){
+
+return /নাম|name/i
+.test(String(h||""));
+
+}
+
+function isAddRemoveHeader(h){
+
+return /যুক্ত|অপসারণ|যোগ|বিয়োগ|বিয়োগ|add|remove|adjust/i
+.test(String(h||""));
+
+}
+
+function signedDelta(value){
+
+const s=
+toEnglishDigits(value)
+.replace(/,/g,"")
+.trim();
+
+const m=
+s.match(
+/[+-]\s*\d+(?:\.\d+)?/
+);
+
+if(!m)
+return 0;
+
+const n=
+Number(
+m[0].replace(/\s/g,"")
+);
+
+return Number.isFinite(n)
+?n
+:0;
+
+}
+
+function buildNameWiseTotals(card){
+
+const result=
+new Map();
+
+if(
+!card ||
+!Array.isArray(card.headers) ||
+!Array.isArray(card.rows)
+)
+return result;
+
+const nameHeader=
+card.headers.find(
+isNameHeader
+);
+
+const totalHeader=
+card.headers.find(
+isRunningTotalHeader
+);
+
+const changeHeader=
+card.headers.find(
+isAddRemoveHeader
+);
+
+if(
+!nameHeader ||
+!totalHeader ||
+!changeHeader
+)
+return result;
+
+card.rows.forEach(row=>{
+
+const name=
+String(
+row?.[nameHeader]??""
+)
+.trim();
+
+if(!name)
+return;
+
+const key=
+name.toLocaleLowerCase();
+
+if(!result.has(key)){
+
+result.set(
+key,
+{
+name,
+base:0,
+hasBase:false,
+delta:0,
+total:0
+}
+);
+
+}
+
+const item=
+result.get(key);
+
+const baseText=
+String(
+row?.[totalHeader]??""
+)
+.trim();
+
+if(
+!item.hasBase &&
+baseText!==""
+){
+
+item.base=
+totalNumber(baseText);
+
+item.hasBase=
+true;
+
+}
+
+item.delta+=
+signedDelta(
+row?.[changeHeader]??""
+);
+
+});
+
+result.forEach(item=>{
+
+item.total=
+item.base+
+item.delta;
+
+});
+
+return result;
+
+}
+
+
+/* MONTH / YEAR */
+
+function monthGroupKey(value){
+
+let s=
+String(value??"").trim();
+
+if(!s)
+return "no-date";
+
+s=
+s.replace(
+/[০-৯]/g,
+d=>"০১২৩৪৫৬৭৮৯".indexOf(d)
+);
+
+let y=0,
+m=0;
+
+let a=
+s.match(
+/^(\d{4})[-/.](\d{1,2})(?:[-/.](\d{1,2}))?/
+);
+
+if(a){
+
+y=
+Number(a[1]);
+
+m=
+Number(a[2]);
+
+}else{
+
+a=
+s.match(
+/^(\d{1,2})[-/.](\d{1,2})[-/.](\d{4})$/
+);
+
+if(a){
+
+y=
+Number(a[3]);
+
+m=
+Number(a[2]);
+
+}
+
+}
+
+if(
+!y ||
+m<1 ||
+m>12
+){
+
+const d=
+new Date(s);
+
+if(
+!Number.isNaN(d.getTime())
+){
+
+y=
+d.getFullYear();
+
+m=
+d.getMonth()+1;
+
+}
+
+}
+
+return y &&
+m>=1 &&
+m<=12
+?
+`${y}-${String(m).padStart(2,"0")}`
+:
+"no-date";
+
+}
+
+function monthGroupTitle(key){
+
+if(key==="no-date")
+return "তারিখ নেই";
+
+const months=[
+"জানুয়ারি",
+"ফেব্রুয়ারি",
+"মার্চ",
+"এপ্রিল",
+"মে",
+"জুন",
+"জুলাই",
+"আগস্ট",
+"সেপ্টেম্বর",
+"অক্টোবর",
+"নভেম্বর",
+"ডিসেম্বর"
+];
+
+const p=
+String(key).split("-");
+
+const y=
+Number(p[0]);
+
+const m=
+Number(p[1]);
+
+return y &&
+m>=1 &&
+m<=12
+?
+`${months[m-1]} - ${bn(y)}`
+:
+key;
+
+}
+
+function monthGroupOrder(keys){
+
+return keys.sort(
+(a,b)=>{
+
+if(a==="no-date")
+return 1;
+
+if(b==="no-date")
+return -1;
+
+return b.localeCompare(a);
+
+}
+);
+
+}
+
+
+/* RENDER NORMAL TABLE */
+
+function renderTable(){
+
+let c=
+data.cards.find(
+x=>x.id===currentId
+);
+
+if(!c)
+return;
+
+normalizeLinkCard(c);
+normalizeMediaCard(c);
+
+const nameWiseTotals=
+buildNameWiseTotals(c);
+
+const runningTotalHeader=
+c.headers.find(
+isRunningTotalHeader
+);
+
+const runningNameHeader=
+c.headers.find(
+isNameHeader
+);
+
+const hasNameWiseTotal=
+!!(
+runningTotalHeader &&
+runningNameHeader &&
+c.headers.some(
+isAddRemoveHeader
+)
+);
+
+let q=
+String(
+$("tableSearch")?.value||""
+)
+.toLowerCase()
+.trim();
+
+if(isMediaCard(c)){
+
+renderMediaCardView(c,q);
+
+return;
+
+}
+
+if(c.linkMode){
+
+renderLinkCardView(c,q);
+
+return;
+
+}
+
+const wrap=
+$("tableSections");
+
+wrap.innerHTML="";
+
+let rows=
+Array.isArray(c.rows)
+?
+c.rows
+:
+[];
+
+let filtered=
+rows.filter(
+r=>
+!q ||
+Object.values(r||{})
+.join(" ")
+.toLowerCase()
+.includes(q)
+);
+
+if(!filtered.length){
+
+wrap.innerHTML=`
+<div class="empty">
+কোনো তথ্য পাওয়া যায়নি।
+</div>
+`;
+
+return;
+
+}
+
+let dateH=
+c.headers.find(
+h=>
+/তারিখ|date/i
+.test(String(h))
+);
+
+let groups={};
+
+filtered.forEach(r=>{
+
+let rawDate=
+dateH
+?
+String(r[dateH]||"").trim()
+:
+"";
+
+let key=
+monthGroupKey(rawDate);
+
+if(!groups[key])
+groups[key]=[];
+
+groups[key].push(r);
+
+});
+
+monthGroupOrder(
+Object.keys(groups)
+)
+.forEach(month=>{
+
+let section=
+document.createElement("section");
+
+section.style.marginBottom=
+"22px";
+
+let title=
+document.createElement("div");
+
+title.style.cssText=`
+font-size:20px;
+font-weight:900;
+color:#07579f;
+margin:0 0 8px;
+`;
+
+title.textContent=
+monthGroupTitle(month);
+
+section.appendChild(title);
+
+let tw=
+document.createElement("div");
+
+tw.className=
+"table-wrap";
+
+let table=
+document.createElement("table");
+
+let thead=
+document.createElement("thead");
+
+let tr=
+document.createElement("tr");
+
+c.headers.forEach(h=>{
+
+let th=
+document.createElement("th");
+
+th.textContent=
+h;
+
+tr.appendChild(th);
+
+});
+
+let ath=
+document.createElement("th");
+
+ath.textContent=
+"Action";
+
+tr.appendChild(ath);
+
+thead.appendChild(tr);
+
+table.appendChild(thead);
+
+let tbody=
+document.createElement("tbody");
+
+groups[month].forEach(r=>{
+
+let tr=
+document.createElement("tr");
+
+c.headers.forEach(h=>{
+
+let td=
+document.createElement("td");
+
+let value=
+r[h]||"";
+
+if(
+hasNameWiseTotal &&
+h===runningTotalHeader
+){
+
+const person=
+String(
+r?.[runningNameHeader]??""
+)
+.trim();
+
+const item=
+nameWiseTotals.get(
+person.toLocaleLowerCase()
+);
+
+if(item){
+
+td.className=
+"money-total";
+
+td.innerHTML=
+`<strong>${totalText(item.total)}</strong>`;
+
+}else{
+
+td.textContent=
+value;
+
+}
+
+}else if(
+isAddRemoveHeader(h) &&
+value
+){
+
+td.innerHTML=
+addRemoveHTML(value);
+
+}else{
+
+td.textContent=
+value;
+
+}
+
+tr.appendChild(td);
+
+});
+
+
+let action=
+document.createElement("td");
+
+action.className=
+"action";
+
+let view=
+document.createElement("button");
+
+view.className=
+"act";
+
+view.title=
+"দেখুন";
+
+view.innerHTML=
+actionIconHTML("view");
+
+view.onclick=()=>{
+
+alert(
+c.headers
+.map(h=>
+`${h}: ${r[h]||""}`
+)
+.join("\n")
+);
+
+};
+
+action.appendChild(view);
+
+
+if(
+c.headers.some(
+h=>
+/মোবাইল|মোবাইল নাম্বার|ফোন|phone|mobile/i
+.test(String(h))
+) &&
+c.headers.some(
+h=>
+String(r[h]||"").trim()
+)
+){
+
+let h=
+c.headers.find(
+h=>
+/মোবাইল|মোবাইল নাম্বার|ফোন|phone|mobile/i
+.test(String(h))
+);
+
+let number=
+String(r[h]||"").trim();
+
+if(number){
+
+let call=
+document.createElement("button");
+
+call.className=
+"act";
+
+call.title=
+"কল";
+
+call.innerHTML=
+actionIconHTML("call");
+
+call.onclick=()=>{
+
+location.href=
+"tel:"+number;
+
+};
+
+action.appendChild(call);
+
+}
+
+}
+
+tr.appendChild(action);
+
+tbody.appendChild(tr);
+
+});
+
+
+let totalHeaders=
+c.headers.filter(
+h=>
+isTotalHeader(h) &&
+!(
+hasNameWiseTotal &&
+h===runningTotalHeader
+)
+);
+
+if(totalHeaders.length){
+
+let tr=
+document.createElement("tr");
+
+c.headers.forEach(h=>{
+
+let td=
+document.createElement("td");
+
+if(isTotalHeader(h)){
+
+let sum=
+groups[month]
+.reduce(
+(a,r)=>
+a+
+totalNumber(r[h]),
+0
+);
+
+td.className=
+"money-total";
+
+td.innerHTML=
+`<strong>
+${totalText(sum)}
+${
+isGBHeader(h)
+?
+" GB"
+:
+isMoneyHeader(h)
+?
+" টাকা"
+:
+""
+}
+</strong>`;
+
+}
+
+tr.appendChild(td);
+
+});
+
+let td=
+document.createElement("td");
+
+td.className=
+"money-total";
+
+td.textContent=
+"মোট";
+
+tr.appendChild(td);
+
+tbody.appendChild(tr);
+
+}
+
+table.appendChild(tbody);
+
+tw.appendChild(table);
+
+section.appendChild(tw);
+
+wrap.appendChild(section);
+
+});
+
+}
+
+
+/* MEDIA VIEW */
+
+function renderMediaCardView(c,q){
+
+const wrap=
+$("tableSections");
+
+wrap.innerHTML="";
+
+wrap.classList.remove(
+"link-mode"
+);
+
+wrap.classList.add(
+"media-mode"
+);
+
+const type=
+mediaType(c);
+
+const dateH=
+c.headers.find(
+h=>
+/তারিখ|date/i
+.test(String(h||""))
+)
+||
+c.headers[1]
+||
+c.headers[0];
+
+const nameH=
+c.headers.find(
+h=>
+/নাম|name|শিরোনাম|title/i
+.test(String(h||""))
+)
+||
+c.headers[2]
+||
+c.headers[1];
+
+const urlH=
+c.headers.find(
+h=>
+/লিংক|link|url|media|audio|video|ছবি|image/i
+.test(String(h||""))
+)
+||
+c.headers[3]
+||
+c.headers[2];
+
+const groups={};
+
+(c.rows||[])
+.forEach((r,i)=>{
+
+let text=
+Object.values(r||{})
+.join(" ")
+.toLowerCase();
+
+if(
+q &&
+!text.includes(q)
+){
+
+return;
+
+}
+
+let key=
+String(
+r[dateH]||""
+)
+.trim()
+||
+"তারিখ নেই";
+
+if(!groups[key])
+groups[key]=[];
+
+groups[key].push({
+r,
+i
+});
+
+});
+
+if(
+!Object.keys(groups).length
+){
+
+wrap.innerHTML=`
+<div class="media-empty">
+কোনো মিডিয়া তথ্য পাওয়া যায়নি।
+</div>
+`;
+
+return;
+
+}
+
+monthGroupOrder(
+Object.keys(groups)
+)
+.forEach(k=>{
+
+let sec=
+document.createElement("section");
+
+sec.className=
+"media-month";
+
+let dt=
+document.createElement("div");
+
+dt.className=
+"media-date";
+
+dt.textContent=
+k;
+
+sec.appendChild(dt);
+
+let grid=
+document.createElement("div");
+
+grid.className=
+"media-grid";
+
+groups[k].forEach(item=>{
+
+let r=
+item.r;
+
+let name=
+String(
+r[nameH]||type
+)
+.trim()
+||
+type;
+
+let url=
+mediaUrl(
+r[urlH]
+);
+
+let tile=
+document.createElement("div");
+
+tile.className=
+"media-tile";
+
+let head=
+document.createElement("div");
+
+head.className=
+"media-tile-head";
+
+head.textContent=
+name;
+
+tile.appendChild(head);
+
+let area=
+document.createElement("div");
+
+area.className=
+"media-thumb-wrap";
+
+if(!url){
+
+area.innerHTML=`
+<span class="media-play">
+${
+type==="audio"
+?
+"🎵"
+:
+type==="video"
+?
+"▶️"
+:
+"🖼️"
+}
+</span>
+`;
+
+}else if(type==="image"){
+
+let img=
+document.createElement("img");
+
+img.className=
+"media-thumb";
+
+img.src=
+url;
+
+img.alt=
+name;
+
+img.loading=
+"lazy";
+
+img.onerror=()=>{
+
+area.innerHTML=`
+<span class="media-play">
+🖼️
+</span>
+`;
+
+};
+
+area.appendChild(img);
+
+}else if(type==="video"){
+
+let video=
+document.createElement("video");
+
+video.className=
+"media-thumb";
+
+video.src=
+url;
+
+video.muted=
+true;
+
+video.playsInline=
+true;
+
+video.preload=
+"metadata";
+
+video.controls=
+false;
+
+area.appendChild(video);
+
+}else{
+
+area.innerHTML=`
+<span class="media-play">
+🎵
+</span>
+`;
+
+}
+
+tile.appendChild(area);
+
+if(
+type==="audio" &&
+url
+){
+
+let a=
+document.createElement("audio");
+
+a.className=
+"media-audio";
+
+a.controls=
+true;
+
+a.src=
+url;
+
+a.onclick=
+e=>
+e.stopPropagation();
+
+tile.appendChild(a);
+
+}
+
+tile.onclick=e=>{
+
+if(
+type==="audio" &&
+e.target.closest("audio")
+){
+
+return;
+
+}
+
+if(url){
+
+openMediaLightbox(
+type,
+url,
+name
+);
+
+}else{
+
+alert(
+"এই মিডিয়াতে কোনো লিংক দেওয়া হয়নি।"
+);
+
+}
+
+};
+
+grid.appendChild(tile);
+
+});
+
+sec.appendChild(grid);
+
+wrap.appendChild(sec);
+
+});
+
+}
+
+
+/* MEDIA LIGHTBOX */
+
+function closeMediaLightbox(){
+
+$("mediaLightbox")
+.classList.remove("show");
+
+$("mediaLightboxBody")
+.innerHTML="";
+
+$("mediaLightboxName")
+.textContent="";
+
+}
+
+function openMediaLightbox(
+type,
+url,
+name
+){
+
+const body=
+$("mediaLightboxBody");
+
+body.innerHTML="";
+
+if(type==="image"){
+
+const img=
+document.createElement("img");
+
+img.src=
+url;
+
+img.alt=
+name;
+
+body.appendChild(img);
+
+}else if(type==="video"){
+
+const video=
+document.createElement("video");
+
+video.src=
+url;
+
+video.controls=
+true;
+
+video.autoplay=
+true;
+
+video.playsInline=
+true;
+
+body.appendChild(video);
+
+}else{
+
+const audio=
+document.createElement("audio");
+
+audio.src=
+url;
+
+audio.controls=
+true;
+
+audio.autoplay=
+true;
+
+body.appendChild(audio);
+
+}
+
+$("mediaLightboxName")
+.textContent=
+name||"";
+
+$("mediaLightbox")
+.classList.add("show");
+
+}
+
+$("mediaClose")
+.onclick=
+closeMediaLightbox;
+
+$("mediaLightbox")
+.onclick=e=>{
+
+if(
+e.target.id==="mediaLightbox"
+){
+
+closeMediaLightbox();
+
+}
+
+};
+
+document.addEventListener(
+"keydown",
+e=>{
+
+if(e.key==="Escape")
+closeMediaLightbox();
+
+}
+);
+
+
+/* LINK VIEW */
+
+function renderLinkCardView(c,q){
+
+const wrap=
+$("tableSections");
+
+wrap.innerHTML="";
+
+wrap.classList.remove(
+"media-mode"
+);
+
+let dateH=
+c.headers.find(
+h=>
+/তারিখ|date/i
+.test(String(h||""))
+)
+||
+c.headers[0];
+
+let nameH=
+c.headers.find(
+h=>
+/নাম|name|শিরোনাম|title/i
+.test(String(h||""))
+)
+||
+c.headers[1];
+
+let urlH=
+c.headers.find(
+h=>
+/লিংক|link|url/i
+.test(String(h||""))
+)
+||
+c.headers[2];
+
+let groups={};
+
+(c.rows||[])
+.forEach(r=>{
+
+let text=
+Object.values(r||{})
+.join(" ")
+.toLowerCase();
+
+if(
+q &&
+!text.includes(q)
+)
+return;
+
+let key=
+String(
+r[dateH]||""
+)
+.trim()
+||
+"তারিখ নেই";
+
+if(!groups[key])
+groups[key]=[];
+
+groups[key].push(r);
+
+});
+
+if(
+!Object.keys(groups).length
+){
+
+wrap.innerHTML=`
+<div class="empty">
+কোনো লিংক পাওয়া যায়নি।
+</div>
+`;
+
+return;
+
+}
+
+Object.keys(groups)
+.forEach(k=>{
+
+let sec=
+document.createElement("section");
+
+sec.style.marginBottom=
+"22px";
+
+let title=
+document.createElement("div");
+
+title.style.cssText=`
+font-size:20px;
+font-weight:900;
+color:#07579f;
+margin-bottom:10px;
+`;
+
+title.textContent=
+monthGroupTitle(k);
+
+sec.appendChild(title);
+
+let grid=
+document.createElement("div");
+
+grid.className=
+"link-grid";
+
+groups[k].forEach(r=>{
+
+let name=
+String(
+r[nameH]||
+"লিংক"
+)
+.trim()
+||
+"লিংক";
+
+let url=
+String(
+r[urlH]||
+""
+)
+.trim();
+
+let tile=
+document.createElement("div");
+
+tile.className=
+"link-tile";
+
+tile.innerHTML=`
+
+<div class="video-icon">
+▶️
+</div>
+
+<div class="link-tile-name">
+${esc(name)}
+</div>
+
+<div class="link-tile-url">
+${esc(url)}
+</div>
+
+`;
+
+if(url){
+
+tile.onclick=()=>{
+
+window.open(
+url,
+"_blank",
+"noopener"
+);
+
+};
+
+}
+
+grid.appendChild(tile);
+
+});
+
+sec.appendChild(grid);
+
+wrap.appendChild(sec);
+
+});
+
+}
+
+
+/* BACK */
+
+$("back").onclick=()=>{
+
+currentId=
+null;
+
+$("tablePage")
+.classList.remove("active");
+
+$("dashboard")
+.classList.add("active");
+
+};
+
+
+/* SIDEBAR OPEN/CLOSE */
+
+(function(){
+
+const sidebarElement=
+document.getElementById("sidebar");
+
+const menuElement=
+document.getElementById("menu");
+
+if(
+!sidebarElement ||
+!menuElement
+)
+return;
+
+let overlayElement=
+document.getElementById(
+"sidebarOverlay"
+);
+
+if(!overlayElement){
+
+overlayElement=
+document.createElement("div");
+
+overlayElement.id=
+"sidebarOverlay";
+
+document.body.appendChild(
+overlayElement
+);
+
+}
+
+const isMobileSidebar=
+()=>
+window.matchMedia(
+"(max-width: 800px)"
+)
+.matches;
+
+function setSidebarOpen(open){
+
+const shouldOpen=
+Boolean(open) &&
+isMobileSidebar();
+
+sidebarElement.classList.toggle(
+"open",
+shouldOpen
+);
+
+overlayElement.classList.toggle(
+"active",
+shouldOpen
+);
+
+menuElement.setAttribute(
+"aria-expanded",
+shouldOpen
+?
+"true"
+:
+"false"
+);
+
+}
+
+menuElement.onclick=
+function(event){
+
+event.preventDefault();
+
+event.stopPropagation();
+
+setSidebarOpen(
+!sidebarElement.classList.contains(
+"open"
+)
+);
+
+};
+
+overlayElement.onclick=
+function(){
+
+setSidebarOpen(false);
+
+};
+
+sidebarElement
+.querySelectorAll(".nav button")
+.forEach(
+function(button){
+
+button.addEventListener(
+"click",
+function(){
+
+if(isMobileSidebar())
+setSidebarOpen(false);
+
+}
+);
+
+}
+);
+
+document.addEventListener(
+"keydown",
+function(event){
+
+if(event.key==="Escape")
+setSidebarOpen(false);
+
+}
+);
+
+window.addEventListener(
+"resize",
+function(){
+
+if(!isMobileSidebar())
+setSidebarOpen(false);
+
+}
+);
+
+})();
+
+
+/* LOGOUT */
+
+$("logout").onclick=()=>{
+
+location.href=
+"index.html";
+
+};
+
+
+/* NAV */
+
+document
+.querySelectorAll(
+".nav button[data-page]"
+)
+.forEach(
+btn=>{
+
+btn.onclick=()=>{
+
+document
+.querySelectorAll(
+".nav button[data-page]"
+)
+.forEach(
+x=>
+x.classList.remove(
+"active"
+)
+);
+
+btn.classList.add("active");
+
+document
+.querySelectorAll(".page")
+.forEach(
+p=>
+p.classList.remove(
+"active"
+)
+);
+
+$(btn.dataset.page)
+.classList.add("active");
+
+};
+
+}
+);
+
+
+/* START */
+
+function ensureGmailCard(){
+
+if(!Array.isArray(data.cards))
+data.cards=[];
+
+/*
+এই ফাংশনটি শুধু Gmail card-এর প্রয়োজনীয়
+normalization/compatibility বজায় রাখে।
+বিদ্যমান card/data মুছে ফেলা হয় না।
+*/
+
+data.cards.forEach(c=>{
+
+if(
+String(c.name||"")
+.trim()==="জিমেইল"
+){
+
+c.gmailCard=true;
+
+}
+
+});
+
+}
+
+ensureGmailCard();
+
+(data.cards||[])
+.forEach(c=>{
+
+normalizeLinkCard(c);
+
+normalizeMediaCard(c);
+
+});
+
+try{
+
+if(
+data &&
+Array.isArray(data.cards)
+){
+
+localStorage.setItem(
+KEY,
+JSON.stringify(data)
+);
+
+}
+
+}catch(e){}
+
+
+renderCards();
+
+
+/* SAME ORIGIN SYNC */
+
+if(
+"BroadcastChannel" in window
+){
+
+try{
+
+const bc=
+new BroadcastChannel(
+"SOROLIPI_DATA_SYNC"
+);
+
+bc.onmessage=()=>{
+
+try{
+
+const latest=
+localStorage.getItem(KEY);
+
+if(!latest)
+return;
+
+let parsed=
+JSON.parse(latest);
+
+if(
+!parsed ||
+!Array.isArray(parsed.cards)
+)
+return;
+
+data=
+parsed;
+
+ensureGmailCard();
+
+(data.cards||[])
+.forEach(c=>{
+
+normalizeLinkCard(c);
+
+normalizeMediaCard(c);
+
+});
+
+renderCards();
+
+if(currentId){
+
+const c=
+data.cards.find(
+x=>x.id===currentId
+);
+
+if(c){
+
+if(isMediaCard(c)){
+
+renderMediaCardView(
+c,
+$("tableSearch")
+.value
+.toLowerCase()
+);
+
+}else if(c.linkMode){
+
+renderLinkCardView(
+c,
+$("tableSearch")
+.value
+.toLowerCase()
+);
+
+}else{
+
+renderTable();
+
+}
+
+}
+
+}
+
+}catch(e){}
+
+};
+
+}catch(e){}
+
+}
+
+</script>
+
+</body>
+</html>

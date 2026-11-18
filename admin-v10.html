@@ -1,0 +1,2235 @@
+
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>SOROLIPI Admin Panel</title>
+<style>
+*{
+box-sizing:border-box;
+}
+body{
+margin:0;
+font-family:
+Arial,
+"Noto Sans Bengali",
+sans-serif;
+background:#f4f8fb;
+color:#17324d;
+}
+button,
+input{
+font-family:inherit;
+}
+button{
+cursor:pointer;
+}
+.hidden{
+display:none!important;
+}
+#app{
+min-height:100vh;
+display:flex;
+}
+.sidebar{
+width:245px;
+background:#073b63;
+color:#fff;
+position:fixed;
+left:0;
+top:0;
+bottom:0;
+z-index:50;
+}
+.logo{
+padding:22px 20px;
+font-size:22px;
+font-weight:900;
+border-bottom:1px solid #ffffff22;
+}
+.nav{
+padding:12px;
+}
+.nav button{
+display:block;
+width:100%;
+border:0;
+background:transparent;
+color:#fff;
+padding:13px 15px;
+text-align:left;
+border-radius:8px;
+margin-bottom:5px;
+font-size:15px;
+}
+.nav button:hover,
+.nav button.active{
+background:#0c7fe0;
+}
+.main{
+margin-left:245px;
+width:calc(100% - 245px);
+min-height:100vh;
+}
+.top{
+height:68px;
+background:#fff;
+border-bottom:1px solid #dce7ef;
+display:flex;
+align-items:center;
+gap:18px;
+padding:0 22px;
+position:sticky;
+top:0;
+z-index:30;
+}
+.menu{
+display:none;
+border:0;
+background:transparent;
+font-size:25px;
+}
+.brand{
+font-size:22px;
+font-weight:900;
+color:#07579f;
+}
+.search{
+margin-left:auto;
+}
+.search input{
+width:280px;
+padding:10px 13px;
+border:1px solid #cbdbe8;
+border-radius:8px;
+outline:0;
+}
+.content{
+padding:22px;
+}
+.page{
+display:none;
+}
+.page.active{
+display:block;
+}
+.welcome{
+background:#fff;
+border:1px solid #dbe6ef;
+border-radius:13px;
+padding:22px;
+}
+.welcome h1{
+margin:0 0 7px;
+color:#07579f;
+}
+.welcome p{
+margin:0;
+color:#627789;
+}
+.section{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:15px;
+margin:20px 0 13px;
+}
+.section h2{
+margin:0;
+}
+.count{
+color:#60788a;
+}
+.count b{
+color:#07579f;
+}
+.cards{
+display:grid;
+grid-template-columns:
+repeat(auto-fill,minmax(180px,1fr));
+gap:15px;
+}
+.card,
+.add{
+min-height:135px;
+border:1px solid #d6e4ed;
+border-radius:13px;
+padding:16px;
+position:relative;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+box-shadow:0 4px 13px #17486f10;
+}
+.card{
+cursor:pointer;
+}
+.card:hover{
+transform:translateY(-2px);
+box-shadow:0 7px 18px #17486f18;
+}
+.add{
+background:#fff;
+border:2px dashed #9db9cc;
+color:#07579f;
+font-weight:800;
+font-size:17px;
+cursor:pointer;
+}
+.card-icon{
+width:58px;
+height:58px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:36px;
+margin-bottom:8px;
+}
+.card-icon img{
+width:100%;
+height:100%;
+object-fit:contain;
+}
+.card h3{
+margin:0;
+font-size:19px;
+}
+.card .dots{
+position:absolute;
+right:8px;
+top:6px;
+width:32px;
+height:32px;
+border:0;
+background:transparent;
+font-size:23px;
+color:#536b7d;
+}
+.menu-pop{
+display:none;
+position:absolute;
+right:8px;
+top:39px;
+min-width:125px;
+background:#fff;
+border:1px solid #dbe6ef;
+box-shadow:0 7px 25px #0002;
+border-radius:8px;
+overflow:hidden;
+z-index:20;
+}
+.menu-pop button{
+display:block;
+width:100%;
+border:0;
+background:#fff;
+padding:10px 12px;
+text-align:left;
+}
+.menu-pop button:hover{
+background:#f1f6fa;
+}
+.table-head{
+background:#fff;
+border:1px solid #dbe6ef;
+border-radius:12px;
+padding:15px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:10px;
+margin-bottom:14px;
+}
+.back{
+border:0;
+background:#eef5fa;
+color:#07579f;
+padding:9px 13px;
+border-radius:8px;
+font-weight:700;
+}
+.toolbar{
+display:flex;
+gap:8px;
+flex-wrap:wrap;
+}
+.btn{
+border:0;
+border-radius:8px;
+padding:9px 13px;
+font-weight:700;
+}
+.btn-blue{
+background:#07579f;
+color:#fff;
+}
+.btn-green{
+background:#198754;
+color:#fff;
+}
+.btn-red{
+background:#dc3545;
+color:#fff;
+}
+.btn-gray{
+background:#eef3f7;
+color:#334e63;
+}
+.table-wrap{
+background:#fff;
+border:1px solid #dbe6ef;
+border-radius:12px;
+overflow:auto;
+}
+table{
+width:100%;
+border-collapse:collapse;
+min-width:700px;
+}
+th,
+td{
+padding:10px;
+border-bottom:1px solid #e5edf3;
+border-right:1px solid #e5edf3;
+text-align:left;
+vertical-align:middle;
+}
+th{
+background:#edf5fa;
+color:#17324d;
+font-weight:800;
+}
+tr:last-child td{
+border-bottom:0;
+}
+.action{
+white-space:nowrap;
+text-align:center;
+}
+.act{
+width:38px;
+height:34px;
+display:inline-flex;
+align-items:center;
+justify-content:center;
+padding:5px;
+font-size:20px;
+line-height:1;
+vertical-align:middle;
+border:1px solid #d8e4ed;
+background:#fff;
+border-radius:7px;
+}
+.action-icon-img{
+width:24px;
+height:24px;
+object-fit:contain;
+display:block;
+}
+.money-total{
+font-weight:900;
+color:#d62424;
+font-size:16px;
+}
+.plus-value{color:#0a9f2e;font-weight:900;font-size:17px;}
+.minus-value{color:#e00000;font-weight:900;font-size:17px;}
+.empty{
+padding:30px;
+text-align:center;
+color:#718596;
+}
+.modal{
+display:none;
+position:fixed;
+inset:0;
+background:#0008;
+z-index:1000;
+align-items:center;
+justify-content:center;
+padding:18px;
+}
+.modal.show{
+display:flex;
+}
+.modal-box{
+width:min(620px,96vw);
+max-height:90vh;
+overflow:auto;
+background:#fff;
+border-radius:14px;
+padding:20px;
+box-shadow:0 15px 50px #0005;
+}
+.modal-box h3{
+margin:0 0 15px;
+color:#07579f;
+}
+.modal-actions{
+display:flex;
+justify-content:flex-end;
+gap:8px;
+margin-top:16px;
+}
+.field{
+margin-bottom:13px;
+}
+/* কার্ড পাসওয়ার্ডের ঘর সবসময় দৃশ্যমান থাকবে */
+.card-password-field{
+display:block !important;
+visibility:visible !important;
+opacity:1 !important;
+}
+.field label{
+display:block;
+font-weight:700;
+margin-bottom:6px;
+color:#31546d;
+}
+.field input,
+.field select,
+.field textarea{
+width:100%;
+padding:10px 12px;
+border:1px solid #ccdbe7;
+border-radius:8px;
+outline:0;
+}
+.field textarea{
+min-height:90px;
+resize:vertical;
+}
+.header-chips{
+display:flex;
+flex-wrap:wrap;
+gap:8px;
+margin-bottom:12px;
+}
+.chip{
+background:#eef5fa;
+border:1px solid #d5e4ee;
+border-radius:20px;
+padding:6px 10px;
+display:flex;
+align-items:center;
+gap:6px;
+}
+.chip button{
+border:0;
+background:transparent;
+color:#c22d2d;
+font-weight:900;
+}
+.link-grid{
+display:grid;
+grid-template-columns:
+repeat(4,minmax(0,1fr));
+gap:10px;
+}
+.link-tile{
+min-height:95px;
+background:#fff;
+border:1px solid #d9e5ee;
+border-radius:11px;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:9px;
+position:relative;
+}
+.video-icon{
+width:36px;
+height:36px;
+border-radius:50%;
+background:#e9f2f8;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:19px;
+margin-bottom:6px;
+}
+.link-tile-name{
+font-size:13px;
+font-weight:800;
+color:#17324d;
+word-break:break-word;
+}
+.link-tile-url{
+font-size:10px;
+color:#74899a;
+word-break:break-all;
+margin-top:4px;
+}
+.link-admin-dots{
+width:30px;
+height:30px;
+border:0;
+border-radius:7px;
+background:#fff;
+color:#536b7d;
+box-shadow:0 1px 5px #0002;
+font-size:22px;
+line-height:1;
+cursor:pointer;
+}
+.link-admin-menu{
+display:none;
+position:absolute;
+right:0;
+top:33px;
+min-width:125px;
+background:#fff;
+border:1px solid #dbe6ef;
+border-radius:8px;
+box-shadow:0 7px 22px #0002;
+overflow:hidden;
+z-index:20;
+}
+.link-admin-menu button{
+display:block;
+width:100%;
+border:0;
+background:#fff;
+padding:9px 12px;
+text-align:left;
+cursor:pointer;
+font-size:13px;
+}
+.link-admin-menu .link-edit{
+color:#157d4f;
+}
+.link-admin-menu .link-del{
+color:#c22d2d;
+}
+.link-empty{
+padding:18px;
+text-align:center;
+color:#667b8c;
+}
+.media-admin-note{
+margin-top:8px;
+padding:10px 12px;
+background:#eef7ff;
+border:1px solid #cfe4f6;
+border-radius:8px;
+color:#456779;
+font-size:12px;
+}
+.media-admin-note b{
+color:#07579f;
+}
+@media(max-width:800px){
+.sidebar{
+transform:translateX(-100%);
+transition:.2s;
+}
+.top{
+position:sticky;
+top:0;
+z-index:70;
+}
+.menu{
+position:relative;
+z-index:80;
+pointer-events:auto;
+}
+.sidebar.open{
+transform:translateX(0);
+}
+.main{
+margin-left:0;
+width:100%;
+}
+.menu{
+display:block;
+}
+.search input{
+width:180px;
+}
+.link-grid{
+grid-template-columns:
+repeat(4,minmax(0,1fr));
+gap:8px;
+}
+.link-tile{
+min-height:92px;
+padding:8px 4px;
+}
+.video-icon{
+width:32px;
+height:32px;
+font-size:17px;
+}
+.link-tile-name{
+font-size:12px;
+}
+.link-tile-url{
+font-size:9px;
+}
+}
+@media(max-width:480px){
+.search{
+display:none;
+}
+.cards{
+gap:10px;
+}
+.card{
+min-height:120px;
+}
+.card h3{
+font-size:18px;
+}
+.link-grid{
+grid-template-columns:
+repeat(4,minmax(0,1fr));
+gap:6px;
+}
+.link-tile{
+min-height:82px;
+border-radius:9px;
+}
+.video-icon{
+width:28px;
+height:28px;
+font-size:15px;
+margin-bottom:5px;
+}
+.link-tile-name{
+font-size:10px;
+}
+.link-tile-url{
+display:none;
+}
+}
+</style>
+</head>
+<body>
+<div id="app">
+<aside id="sidebar" class="sidebar">
+<div class="logo">
+▣ SOROLIPI
+</div>
+<nav class="nav">
+<button data-page="dashboard"
+class="active">
+⌂ &nbsp; ড্যাশবোর্ড
+</button>
+<button data-page="settings">
+⚙ &nbsp; সিটিং
+</button>
+<button id="logout">
+⇥ &nbsp; লগআউট
+</button>
+</nav>
+</aside>
+<main class="main">
+<header class="top">
+<button id="menu"
+class="menu">
+☰
+</button>
+<div class="brand">
+SOROLIPI
+</div>
+<div class="search">
+<input id="globalSearch"
+placeholder="কার্ড সার্চ করুন...">
+</div>
+</header>
+<section class="content">
+<div id="dashboard"
+class="page active">
+<div class="welcome">
+<h1>
+স্বাগতম, Admin
+</h1>
+<p>
+সহজে তথ্য সংরক্ষণ ও দেখুন।
+</p>
+</div>
+<div class="section">
+<h2>
+কার্ডসমূহ
+</h2>
+<div class="count">
+মোট কার্ড <b id="cardCount">০</b>
+</div>
+</div>
+<div id="cards"
+class="cards">
+</div>
+</div>
+<div id="tablePage"
+class="page">
+<div class="table-head">
+<div>
+<button id="back"
+class="back">
+← সকল কার্ড
+</button>
+<h2 id="tableTitle"
+style="margin:12px 0 0">
+</h2>
+</div>
+<div class="toolbar">
+<button id="addHeader"
+class="btn btn-gray">
++ Header
+</button>
+<button id="addRow"
+class="btn btn-blue">
++ তথ্য
+</button>
+</div>
+</div>
+<div id="tableSections">
+</div>
+</div>
+<div id="settings"
+class="page">
+<div class="welcome">
+<h2>
+সিটিং
+</h2>
+<p>
+Admin Password, Backup এবং অন্যান্য সেটিং এখান থেকে পরিচালনা করুন।
+</p>
+</div>
+<div class="settings-panel" style="margin-top:18px;display:grid;gap:14px;max-width:760px">
+<div class="setting-box" style="background:#fff;border:1px solid #dce7ef;border-radius:12px;padding:18px">
+<h3 style="margin:0 0 7px;color:#07579f">Backup System</h3>
+<p style="margin:0 0 14px;color:#60788a">সব কার্ড, Header, তথ্য, Gmail ও সংরক্ষিত মিডিয়া-ডাটা JSON ফাইলে ডাউনলোড করুন।</p>
+<div style="display:flex;gap:10px;flex-wrap:wrap">
+<button id="downloadBackup" class="btn btn-blue" type="button">⬇ Backup Download</button>
+<button id="restoreBackup" class="btn btn-gray" type="button">⬆ Backup Upload</button>
+<input id="backupFile" type="file" accept=".json,application/json" class="hidden">
+</div>
+<small style="display:block;margin-top:10px;color:#718596">Upload করলে আগের ডাটা মুছে যাবে না; একই কার্ডের নতুন Header/তথ্য যুক্ত হবে।</small>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+<!-- CARD MODAL -->
+<div id="cardModal"
+class="modal">
+<div class="modal-box">
+<h3>
+নতুন / কার্ড পরিবর্তন
+</h3>
+<div class="field">
+<label>
+কার্ডের নাম
+</label>
+<input
+id="cardName"
+placeholder="কার্ডের নাম">
+</div>
+<div class="field">
+<label>
+কার্ড আইকন / Emoji / Image URL
+</label>
+<input
+id="cardIcon"
+placeholder="📁 অথবা https://.../image.png">
+</div>
+<div class="field">
+<label>
+রং
+</label>
+<select id="cardColor">
+<option value="c1">নীল</option>
+<option value="c2">সবুজ</option>
+<option value="c3">কমলা</option>
+<option value="c4">বেগুনি</option>
+<option value="c5">লাল</option>
+<option value="c6">আকাশি</option>
+</select>
+</div>
+<div class="field card-password-field" id="cardPasswordField">
+<label for="cardPassword">
+কার্ড পাসওয়ার্ড
+</label>
+<input
+id="cardPassword"
+type="password"
+autocomplete="new-password"
+placeholder="কার্ডের পাসওয়ার্ড লিখুন (ফাঁকা রাখলে পাসওয়ার্ড লাগবে না)">
+<small style="display:block;margin-top:6px;color:#718596">এই পাসওয়ার্ড User Panel-এ এই কার্ড খুলতে প্রয়োজন হবে।</small>
+</div>
+<div class="media-admin-note">
+<b>অডিও / ভিডিও / ছবি:</b>
+কার্ডের নামের মধ্যে <b>অডিও</b>, <b>ভিডিও</b> বা <b>ছবি</b> থাকলে Media Card স্বয়ংক্রিয়ভাবে চালু হবে।
+</div>
+<div class="modal-actions">
+<button
+class="btn btn-gray"
+onclick="closeModal('cardModal')">
+বাতিল
+</button>
+<button
+id="saveCard"
+class="btn btn-blue">
+সংরক্ষণ
+</button>
+</div>
+</div>
+</div>
+<!-- HEADER MODAL -->
+<div id="headerModal"
+class="modal">
+<div class="modal-box">
+<h3>
+Header / Column
+</h3>
+<div id="headerEditChips"
+class="header-chips">
+</div>
+<div class="field">
+<label>
+নতুন Header
+</label>
+<input
+id="newHeader"
+placeholder="যেমন: নাম, মোবাইল, লিংক, মূল্য">
+</div>
+<div class="modal-actions">
+<button
+class="btn btn-gray"
+onclick="closeModal('headerModal')">
+বাতিল
+</button>
+<button
+id="saveHeaders"
+class="btn btn-blue">
+সংরক্ষণ
+</button>
+</div>
+</div>
+</div>
+<!-- ROW MODAL -->
+<div id="rowModal"
+class="modal">
+<div class="modal-box">
+<h3 id="rowTitle">
+তথ্য
+</h3>
+<div id="rowFields">
+</div>
+<div class="modal-actions">
+<button
+class="btn btn-gray"
+onclick="closeModal('rowModal')">
+বাতিল
+</button>
+<button
+id="saveRow"
+class="btn btn-blue">
+সংরক্ষণ
+</button>
+</div>
+</div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const KEY="SOROLIPI_DATA_V2";
+const colors=[
+"#e9f3ff",
+"#eaf8ef",
+"#fff3e7",
+"#f2ecff",
+"#ffecec",
+"#e9faff"
+];
+const DEFAULT={
+cards:[]
+};
+let data={cards:[]};
+let currentId=null;
+let editRow=-1;
+let selectedColor=1;
+let headerEditList=[];
+/* =========================
+LOAD DATA
+========================= */
+try{
+const saved=
+localStorage.getItem(KEY);
+if(saved){
+const parsed=
+JSON.parse(saved);
+if(parsed &&
+Array.isArray(parsed.cards)){
+data=parsed;
+}
+}
+}catch(e){
+data={cards:[]};
+}
+function bn(n){
+return String(n).replace(
+/\d/g,
+d=>"০১২৩৪৫৬৭৮৯"[d]
+);
+}
+function persist(){
+localStorage.setItem(
+KEY,
+JSON.stringify(data)
+);
+}
+function esc(s){
+return String(s??"")
+.replace(/[&<>"']/g,m=>({
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#39;"
+}[m]));
+}
+/* =========================
+CARD ICON
+========================= */
+function isImageIcon(v){
+return /^(https?:\/\/|data:image\/)/i
+.test(String(v||"").trim());
+}
+function iconHTML(v){
+let s=String(v||"").trim();
+if(!s){
+return "📁";
+}
+if(isImageIcon(s)){
+return `
+<img
+src="${esc(s)}"
+alt=""
+onerror="this.style.display='none';this.parentElement.textContent='📁';">
+`;
+}
+return esc(s);
+}
+/* =========================
+ACTION BUTTON ICONS
+========================= */
+const ACTION_ICONS={
+view:"👁️",
+edit:"✏️",
+delete:"🗑️",
+call:"📞"
+};
+function isImageActionIcon(v){
+return /^(https?:\/\/|data:image\/)/i
+.test(String(v||"").trim());
+}
+function actionIconHTML(type){
+let v=
+ACTION_ICONS[type]||"•";
+let s=
+String(v).trim();
+if(isImageActionIcon(s)){
+return `
+<img
+src="${esc(s)}"
+alt=""
+class="action-icon-img"
+onerror="this.style.display='none';this.parentElement.textContent='•';">
+`;
+}
+return esc(s);
+}
+/* =========================
+GMAIL
+========================= */
+function isGmailCard(c){
+return !!c &&
+String(c.name||"").trim()==="জিমেইল";
+}
+function ensureGmailCard(){
+let gs=
+data.cards.filter(
+isGmailCard
+);
+let g=gs[0];
+if(!g){
+g={
+id:"gmail-"+Date.now(),
+name:"জিমেইল",
+headers:[],
+color:"c4",
+rows:[],
+linkMode:false,
+gmailRecords:[]
+};
+data.cards.push(g);
+}
+if(!Array.isArray(g.gmailRecords)){
+g.gmailRecords=[];
+}
+if(gs.length>1){
+gs.slice(1).forEach(x=>{
+if(Array.isArray(x.gmailRecords)){
+g.gmailRecords.push(
+...x.gmailRecords
+);
+}
+});
+data.cards=
+data.cards.filter(
+x=>x===g ||
+!isGmailCard(x)
+);
+}
+return g;
+}
+/* =========================
+LINK CARD
+========================= */
+function isLinkCard(c){
+return !!c &&
+/(?:লিংক|লিঙ্ক)\s*$/i
+.test(
+String(c.name||"")
+);
+}
+function normalizeLinkCard(c){
+c.linkMode=
+isLinkCard(c);
+if(
+c.linkMode &&
+(!Array.isArray(c.headers) ||
+!c.headers.length)
+){
+c.headers=[
+"তারিখ",
+"নাম",
+"লিংক"
+];
+}
+}
+/* =========================
+MEDIA CARD
+========================= */
+function mediaType(c){
+const n=
+String(c?.name||"").trim();
+if(/অডিও|audio|mp3|sound/i.test(n))
+return "audio";
+if(/ভিডিও|video|movie|clip/i.test(n))
+return "video";
+if(/ছবি|ফটো|photo|image/i.test(n))
+return "image";
+return "";
+}
+function isMediaCard(c){
+return !!mediaType(c);
+}
+function normalizeMediaCard(c){
+const t=
+mediaType(c);
+if(
+t &&
+(!Array.isArray(c.headers) ||
+!c.headers.length)
+){
+c.headers=[
+"নং",
+"তারিখ",
+"নাম",
+"লিংক"
+];
+}
+}
+/* =========================
+RENDER CARDS
+========================= */
+function renderCards(){
+const wrap=$("cards");
+wrap.innerHTML="";
+const q=
+String($("globalSearch")?.value||"")
+.toLowerCase()
+.trim();
+let cards=
+data.cards.filter(c=>
+!q ||
+String(c.name||"")
+.toLowerCase()
+.includes(q)
+);
+$("cardCount").textContent=
+bn(cards.length);
+if(!cards.length){
+wrap.innerHTML=`
+<div class="empty">
+কোনো কার্ড পাওয়া যায়নি।
+</div>
+`;
+return;
+}
+cards.forEach(c=>{
+normalizeLinkCard(c);
+normalizeMediaCard(c);
+let div=
+document.createElement("div");
+div.className="card";
+div.style.background=
+c.color||"#fff";
+div.innerHTML=`
+<div class="card-icon">
+${iconHTML(c.icon)}
+</div>
+<h3>
+${esc(c.name)}
+</h3>
+<button
+class="dots"
+type="button">
+⋮
+</button>
+<div class="menu-pop">
+<button
+data-action="rename">
+✏️ নাম পরিবর্তন
+</button>
+<button
+data-action="delete">
+🗑️ মুছে দিন
+</button>
+</div>
+`;
+div.onclick=e=>{
+if(e.target.closest(".dots") ||
+e.target.closest(".menu-pop")){
+return;
+}
+openCard(c.id);
+};
+const dots=
+div.querySelector(".dots");
+const menu=
+div.querySelector(".menu-pop");
+dots.onclick=e=>{
+e.stopPropagation();
+menu.style.display=
+menu.style.display==="block"
+?"none"
+:"block";
+};
+menu.querySelector(
+'[data-action="rename"]'
+).onclick=e=>{
+e.stopPropagation();
+openCardEdit(c.id);
+};
+menu.querySelector(
+'[data-action="delete"]'
+).onclick=e=>{
+e.stopPropagation();
+if(confirm(
+`"${c.name}" কার্ডটি মুছে ফেলবেন?`
+)){
+data.cards=
+data.cards.filter(
+x=>x.id!==c.id
+);
+persist();
+renderCards();
+}
+};
+wrap.appendChild(div);
+});
+}
+/* =========================
+OPEN CARD
+========================= */
+function openCard(id){
+currentId=id;
+const c=
+data.cards.find(
+x=>x.id===id
+);
+if(!c)return;
+$("dashboard")
+.classList.remove("active");
+$("settings")
+.classList.remove("active");
+$("tablePage")
+.classList.add("active");
+$("tableTitle").textContent=
+c.name;
+renderTable();
+}
+/* =========================
+OPEN CARD EDIT
+========================= */
+function openCardEdit(id){
+const c=
+data.cards.find(
+x=>x.id===id
+);
+if(!c)return;
+currentId=id;
+$("cardName").value=
+c.name||"";
+$("cardIcon").value=
+c.icon||"";
+selectedColor=
+colors.indexOf(c.color)+1;
+$("cardPassword").value=
+c.password||"";
+if(selectedColor<1)
+selectedColor=1;
+$("cardColor").value=
+"c"+selectedColor;
+modal("cardModal");
+}
+/* =========================
+ADD CARD
+========================= */
+document
+.getElementById("addCard")
+?.addEventListener(
+"click",
+()=>{
+currentId=null;
+$("cardName").value="";
+$("cardIcon").value="📁";
+$("cardColor").value="c1";
+$("cardPassword").value="";
+modal("cardModal");
+});
+/* =========================
+SAVE CARD
+========================= */
+$("saveCard").onclick=()=>{
+let name=
+$("cardName").value.trim();
+if(!name){
+alert("কার্ডের নাম দিন।");
+return;
+}
+let icon=
+$("cardIcon").value.trim();
+let color=
+$("cardColor").value;
+let password=
+$("cardPassword").value.trim();
+let colorIndex=
+Number(
+color.replace("c","")
+);
+if(
+currentId
+){
+let c=
+data.cards.find(
+x=>x.id===currentId
+);
+if(c){
+c.name=name;
+c.icon=icon;
+c.color=
+colors[colorIndex-1];
+c.password=password;
+if(isMediaCard(c) &&
+(!c.headers ||
+!c.headers.length)){
+c.headers=[
+"নং",
+"তারিখ",
+"নাম",
+"লিংক"
+];
+}else if(!Array.isArray(c.headers)){
+c.headers=[];
+}
+normalizeLinkCard(c);
+normalizeMediaCard(c);
+}
+}else{
+let c={
+id:
+"card-"+Date.now()+"-"+Math.random()
+.toString(36)
+.slice(2),
+name,
+icon,
+headers:
+(isMediaCard({name})
+?[
+"নং",
+"তারিখ",
+"নাম",
+"লিংক"
+]
+:[]),
+color:
+colors[colorIndex-1],
+rows:[],
+linkMode:false,
+password
+};
+normalizeLinkCard(c);
+normalizeMediaCard(c);
+data.cards.push(c);
+}
+persist();
+closeModal("cardModal");
+renderCards();
+};
+/* =========================
+HEADER MODAL
+========================= */
+function openHeaderModal(){
+let c=
+data.cards.find(
+x=>x.id===currentId
+);
+if(!c)return;
+headerEditList=
+[...c.headers];
+renderHeaderEditChips();
+modal("headerModal");
+}
+function renderHeaderEditChips(){
+$("headerEditChips")
+.innerHTML="";
+headerEditList.forEach(
+(h,i)=>{
+let d=
+document.createElement("div");
+d.className="chip";
+d.innerHTML=`
+<span>
+${esc(h)}
+</span>
+<button
+type="button"
+data-i="${i}">
+×
+</button>
+`;
+d.querySelector("button")
+.onclick=()=>{
+headerEditList.splice(i,1);
+renderHeaderEditChips();
+};
+$("headerEditChips")
+.appendChild(d);
+});
+}
+$("saveHeaders").onclick=()=>{
+let c=
+data.cards.find(
+x=>x.id===currentId
+);
+if(!c)return;
+let h=
+$("newHeader")
+.value.trim();
+if(h){
+headerEditList.push(h);
+$("newHeader").value="";
+}
+if(!headerEditList.length){
+alert("কমপক্ষে একটি Header রাখুন।");
+return;
+}
+c.headers=
+[...headerEditList];
+persist();
+closeModal("headerModal");
+renderTable();
+};
+/* =========================
+ADD HEADER
+========================= */
+$("addHeader").onclick=
+openHeaderModal;
+/* =========================
+ROW
+========================= */
+function openRow(index=null){
+let c=
+data.cards.find(
+x=>x.id===currentId
+);
+if(!c)return;
+editRow=
+index===null
+?-1
+:index;
+$("rowTitle").textContent=
+editRow>=0
+?"তথ্য পরিবর্তন"
+:"নতুন তথ্য";
+$("rowFields")
+.innerHTML="";
+c.headers.forEach(h=>{
+let div=
+document.createElement("div");
+div.className="field";
+let value=
+editRow>=0
+?(c.rows[editRow]||{})[h]||""
+:"";
+let type=
+"";
+if(/তারিখ|date/i.test(h))
+type="date";
+div.innerHTML=`
+<label>
+${esc(h)}
+</label>
+<input
+${type?`type="${type}"`:""}
+data-header="${esc(h)}"
+value="${esc(value)}"
+placeholder="${esc(h)}">
+`;
+$("rowFields")
+.appendChild(div);
+});
+modal("rowModal");
+}
+/* =========================
+SAVE ROW
+========================= */
+$("saveRow").onclick=()=>{
+let c=
+data.cards.find(
+x=>x.id===currentId
+);
+if(!c)return;
+let r={};
+document
+.querySelectorAll(
+"#rowFields input"
+)
+.forEach(inp=>{
+r[inp.dataset.header]=
+inp.value.trim();
+});
+if(!Array.isArray(c.rows))
+c.rows=[];
+if(editRow<0){
+c.rows.push(r);
+}else{
+c.rows[editRow]=r;
+}
+persist();
+closeModal("rowModal");
+renderTable();
+};
+/* =========================
+ADD ROW
+========================= */
+$("addRow").onclick=
+()=>openRow();
+/* =========================
+TOTAL
+========================= */
+function isLinkHeader(h){
+return /^(লিংক|link)(?:\s*(নাম|name))?$/i
+.test(String(h).trim())
+||
+/লিংক/i.test(String(h));
+}
+function isMoneyHeader(h){
+return /টাকা|মূল্য|দাম|খরচ|amount|price|taka|money/i
+.test(String(h||""));
+}
+function isGBHeader(h){
+return /জিবি|gb|g\.b\.|gigabyte/i
+.test(String(h||""));
+}
+function isTotalHeader(h){
+return isMoneyHeader(h)||
+isGBHeader(h);
+}
+function toEnglishDigits(v){
+return String(v??"")
+.replace(
+/[০-৯]/g,
+d=>"০১২৩৪৫৬৭৮৯".indexOf(d)
+);
+}
+function totalNumber(v){
+let s=
+toEnglishDigits(v)
+.replace(/[, \s৳$]/g,"")
+.replace(
+/(?:gb|g\.b\.|জিবি|টাকা|৳|মূল্য|দাম)/gi,
+""
+)
+.trim();
+if(!s)return 0;
+let n=
+Number(s);
+return Number.isFinite(n)
+?n
+:0;
+}
+function totalText(v){
+return Number.isInteger(v)
+?bn(v)
+:bn(
+Number(v)
+.toFixed(2)
+.replace(/\.00$/,"")
+);
+}
+/* =========================
+PLUS / MINUS VALUE
+========================= */
+function addRemoveHTML(value){
+let s=String(value??"");
+let t=s.trim();
+if(/^\+\s*[0-9০-৯]/.test(t)){
+return `<span class="plus-value">${esc(s)}</span>`;
+}
+if(/^-\s*[0-9০-৯]/.test(t)){
+return `<span class="minus-value">${esc(s)}</span>`;
+}
+
+return esc(s);
+}
+/* =========================
+RENDER TABLE
+========================= */
+/* =========================
+MONTH / YEAR GROUPING
+========================= */
+function monthGroupKey(value){
+let s=String(value??'').trim();
+if(!s) return 'no-date';
+s=s.replace(/[০-৯]/g,d=>'০১২৩৪৫৬৭৮৯'.indexOf(d));
+let y=0,m=0;
+let a=s.match(/^(\d{4})[-/.](\d{1,2})(?:[-/.](\d{1,2}))?/);
+if(a){ y=Number(a[1]); m=Number(a[2]); }
+else {
+a=s.match(/^(\d{1,2})[-/.](\d{1,2})[-/.](\d{4})$/);
+if(a){ y=Number(a[3]); m=Number(a[2]); }
+}
+if(!y || m<1 || m>12){
+const d=new Date(s);
+if(!Number.isNaN(d.getTime())){ y=d.getFullYear(); m=d.getMonth()+1; }
+}
+return y && m>=1 && m<=12 ? `${y}-${String(m).padStart(2,'0')}` : 'no-date';
+}
+function monthGroupTitle(key){
+if(key==='no-date') return 'তারিখ নেই';
+const months=['জানুয়ারি','ফেব্রুয়ারি','মার্চ','এপ্রিল','মে','জুন','জুলাই','আগস্ট','সেপ্টেম্বর','অক্টোবর','নভেম্বর','ডিসেম্বর'];
+const p=String(key).split('-');
+const y=Number(p[0]), m=Number(p[1]);
+return y && m>=1 && m<=12 ? `${months[m-1]} - ${bn(y)}` : key;
+}
+function monthGroupOrder(keys){
+return keys.sort((a,b)=>{
+if(a==='no-date') return 1;
+if(b==='no-date') return -1;
+return b.localeCompare(a);
+});
+}
+function renderTable(){
+let c=
+data.cards.find(
+x=>x.id===currentId
+);
+if(!c)return;
+normalizeLinkCard(c);
+normalizeMediaCard(c);
+if(isMediaCard(c)){
+renderMediaCardView(c);
+return;
+}
+if(c.linkMode){
+renderLinkCardView(c);
+return;
+}
+const wrap=
+$("tableSections");
+wrap.innerHTML="";
+let rows=
+Array.isArray(c.rows)
+?c.rows
+:[];
+if(!rows.length){
+wrap.innerHTML=`
+<div class="empty">
+কোনো তথ্য নেই।
+</div>
+`;
+return;
+}
+let dateH=
+c.headers.find(
+h=>/তারিখ|date/i.test(String(h))
+);
+let groups={};
+rows.forEach((r,i)=>{
+let rawDate=dateH?String(r[dateH]||"").trim():"";
+let key=monthGroupKey(rawDate);
+if(!groups[key])
+groups[key]=[];
+groups[key].push({
+r,
+i
+});
+});
+monthGroupOrder(Object.keys(groups))
+.forEach(month=>{
+let section=
+document.createElement("section");
+section.style.marginBottom="22px";
+section.innerHTML=`
+<div style="
+font-size:20px;
+font-weight:900;
+color:#07579f;
+margin:0 0 8px;
+">
+${esc(monthGroupTitle(month))}
+</div>
+`;
+let tw=
+document.createElement("div");
+tw.className="table-wrap";
+let table=
+document.createElement("table");
+let thead=
+document.createElement("thead");
+let tr=
+document.createElement("tr");
+c.headers.forEach(h=>{
+let th=
+document.createElement("th");
+th.textContent=h;
+tr.appendChild(th);
+});
+let ath=
+document.createElement("th");
+ath.textContent="Action";
+tr.appendChild(ath);
+thead.appendChild(tr);
+table.appendChild(thead);
+let tbody=
+document.createElement("tbody");
+groups[month].forEach(
+item=>{
+let tr=
+document.createElement("tr");
+c.headers.forEach(h=>{
+let td=
+document.createElement("td");
+let value=
+item.r[h]||"";
+if(isLinkHeader(h) &&
+value){
+let a=
+document.createElement("a");
+a.href=value;
+a.target="_blank";
+a.rel="noopener";
+a.textContent="🔗";
+a.title=value;
+td.appendChild(a);
+}else if(/যুক্ত|অপসারণ/.test(String(h))){
+td.innerHTML=addRemoveHTML(value);
+}else{
+td.textContent=value;
+}
+tr.appendChild(td);
+});
+let td=
+document.createElement("td");
+td.className="action";
+td.innerHTML=`
+<button
+class="act"
+title="দেখুন"
+type="button">
+${actionIconHTML("view")}
+</button>
+<button
+class="act"
+title="সম্পাদনা"
+type="button">
+${actionIconHTML("edit")}
+</button>
+<button
+class="act"
+title="মুছে দিন"
+type="button">
+${actionIconHTML("delete")}
+</button>
+`;
+td.querySelectorAll("button")[0]
+.onclick=()=>{
+alert(
+c.headers
+.map(h=>`${h}: ${item.r[h]||""}`)
+.join("\n")
+);
+};
+td.querySelectorAll("button")[1]
+.onclick=()=>{
+openRow(item.i);
+};
+td.querySelectorAll("button")[2]
+.onclick=()=>{
+if(confirm("এই তথ্য মুছে ফেলবেন?")){
+c.rows.splice(item.i,1);
+persist();
+renderTable();
+}
+};
+tr.appendChild(td);
+tbody.appendChild(tr);
+});
+let totalHeaders=
+c.headers.filter(
+isTotalHeader
+);
+if(totalHeaders.length){
+let tr=
+document.createElement("tr");
+c.headers.forEach(h=>{
+let td=
+document.createElement("td");
+if(isTotalHeader(h)){
+let sum=
+groups[month]
+.reduce(
+(a,x)=>
+a+
+totalNumber(x.r[h]),
+0
+);
+td.className=
+"money-total";
+td.textContent=
+totalText(sum)+
+(
+isGBHeader(h)
+?" GB"
+:isMoneyHeader(h)
+?" টাকা"
+:""
+);
+}
+tr.appendChild(td);
+});
+let td=
+document.createElement("td");
+td.textContent="মোট";
+td.className=
+"money-total";
+tr.appendChild(td);
+tbody.appendChild(tr);
+}
+table.appendChild(tbody);
+tw.appendChild(table);
+section.appendChild(tw);
+wrap.appendChild(section);
+});
+}
+/* =========================
+MEDIA VIEW
+========================= */
+function mediaType(c){
+const n=
+String(c?.name||"").trim();
+if(/অডিও|audio|mp3|sound/i.test(n))
+return "audio";
+if(/ভিডিও|video|movie|clip/i.test(n))
+return "video";
+if(/ছবি|ফটো|photo|image/i.test(n))
+return "image";
+return "";
+}
+function mediaUrl(v){
+let s=
+String(v||"").trim();
+if(!/^https?:\/\//i.test(s) &&
+!/^data:/i.test(s)){
+return "";
+}
+return s;
+}
+function renderMediaCardView(c){
+const wrap=
+$("tableSections");
+wrap.innerHTML="";
+let type=
+mediaType(c);
+let dateH=
+c.headers.find(
+h=>/তারিখ|date/i.test(String(h||""))
+)
+||
+c.headers[1]
+||
+c.headers[0];
+let nameH=
+c.headers.find(
+h=>/নাম|name|শিরোনাম|title/i.test(String(h||""))
+)
+||
+c.headers[2]
+||
+c.headers[1];
+let urlH=
+c.headers.find(
+h=>/লিংক|link|url|media|audio|video|ছবি|image/i.test(String(h||""))
+)
+||
+c.headers[3]
+||
+c.headers[2];
+let groups={};
+(c.rows||[])
+.forEach((r,i)=>{
+let key=monthGroupKey(String(r[dateH]||"").trim());
+if(!groups[key])
+groups[key]=[];
+groups[key].push({
+r,
+i
+});
+});
+if(!Object.keys(groups).length){
+wrap.innerHTML=`
+<div class="empty">
+কোনো ${type==="audio"?"অডিও":type==="video"?"ভিডিও":"ছবি"} তথ্য নেই।
+</div>
+`;
+return;
+}
+monthGroupOrder(Object.keys(groups))
+.forEach(k=>{
+let sec=
+document.createElement("section");
+sec.innerHTML=`
+<div style="
+font-size:20px;
+font-weight:900;
+color:#07579f;
+margin:0 0 10px;
+">
+${esc(monthGroupTitle(k))}
+</div>
+`;
+let grid=
+document.createElement("div");
+grid.className="link-grid";
+groups[k].forEach(item=>{
+let r=item.r;
+let name=
+String(r[nameH]||type)
+.trim()||
+type;
+let url=
+mediaUrl(r[urlH]);
+let tile=
+document.createElement("div");
+tile.className="link-tile";
+let icon=
+type==="audio"
+?"🎵"
+:type==="video"
+?"▶️"
+:"🖼️";
+tile.innerHTML=`
+<div class="video-icon">
+${icon}
+</div>
+<div class="link-tile-name">
+${esc(name)}
+</div>
+<div class="link-tile-url">
+${esc(url)}
+</div>
+<button
+type="button"
+class="link-admin-dots"
+title="অপশন">
+⋮
+</button>
+<div class="link-admin-menu">
+<button
+type="button"
+class="link-edit">
+✏️ সম্পাদনা
+</button>
+<button
+type="button"
+class="link-del">
+🗑️ মুছে দিন
+</button>
+</div>
+`;
+if(url){
+tile.onclick=(e)=>{
+if(e.target.closest(".link-admin-dots") ||
+e.target.closest(".link-admin-menu")){
+return;
+}
+window.open(
+url,
+"_blank",
+"noopener"
+);
+};
+}
+const mediaDots=
+tile.querySelector(".link-admin-dots");
+const mediaMenu=
+tile.querySelector(".link-admin-menu");
+mediaDots.onclick=(e)=>{
+e.stopPropagation();
+document
+.querySelectorAll(".link-admin-menu")
+.forEach(m=>{
+if(m!==mediaMenu){
+m.style.display="none";
+}
+});
+mediaMenu.style.display=
+mediaMenu.style.display==="block"
+?"none"
+:"block";
+};
+mediaMenu.querySelector(".link-edit").onclick=(e)=>{
+e.stopPropagation();
+openRow(item.i);
+mediaMenu.style.display="none";
+};
+mediaMenu.querySelector(".link-del").onclick=(e)=>{
+e.stopPropagation();
+if(confirm("এই তথ্য মুছে ফেলবেন?")){
+c.rows.splice(item.i,1);
+persist();
+renderMediaCardView(c);
+}
+};
+grid.appendChild(tile);
+});
+sec.appendChild(grid);
+wrap.appendChild(sec);
+});
+}
+/* =========================
+LINK CARD VIEW
+========================= */
+function renderLinkCardView(c){
+const wrap=
+$("tableSections");
+wrap.innerHTML="";
+let dateH=
+c.headers.find(
+h=>/তারিখ|date/i.test(String(h||""))
+)
+||
+c.headers[0];
+let nameH=
+c.headers.find(
+h=>/নাম|name|শিরোনাম|title/i.test(String(h||""))
+)
+||
+c.headers[1];
+let urlH=
+c.headers.find(
+h=>/লিংক|link|url/i.test(String(h||""))
+)
+||
+c.headers[2];
+let groups={};
+(c.rows||[])
+.forEach(r=>{
+let key=
+String(r[dateH]||"").trim()||
+"তারিখ নেই";
+if(!groups[key])
+groups[key]=[];
+groups[key].push(r);
+});
+Object.keys(groups)
+.forEach(k=>{
+let sec=
+document.createElement("section");
+sec.style.marginBottom="22px";
+sec.innerHTML=`
+<div style="
+font-size:20px;
+font-weight:900;
+color:#07579f;
+margin-bottom:10px;
+">
+${esc(monthGroupTitle(k))}
+</div>
+<div class="link-grid">
+</div>
+`;
+let grid=
+sec.querySelector(".link-grid");
+groups[k].forEach(r=>{
+let name=
+String(r[nameH]||"লিংক")
+.trim()||
+"লিংক";
+let url=
+String(r[urlH]||"")
+.trim();
+let tile=
+document.createElement("div");
+tile.className="link-tile";
+tile.innerHTML=`
+<div class="video-icon">
+▶️
+</div>
+<div class="link-tile-name">
+${esc(name)}
+</div>
+<div class="link-tile-url">
+${esc(url)}
+</div>
+`;
+if(url){
+tile.onclick=()=>{
+window.open(
+url,
+"_blank",
+"noopener"
+);
+};
+}
+grid.appendChild(tile);
+});
+wrap.appendChild(sec);
+});
+}
+/* =========================
+MODAL
+========================= */
+function modal(id){
+$(id).classList.add("show");
+}
+function closeModal(id){
+$(id).classList.remove("show");
+}
+/* =========================
+BACK
+========================= */
+$("back").onclick=()=>{
+currentId=null;
+$("tablePage")
+.classList.remove("active");
+$("dashboard")
+.classList.add("active");
+};
+/* =========================
+SEARCH
+========================= */
+$("globalSearch")
+.addEventListener(
+"input",
+renderCards
+);
+/* =========================
+MENU
+========================= */
+/* SIDEBAR OPEN / CLOSE FIX
+Header/menu stays above the sidebar on mobile so the same button
+remains tappable when the sidebar is open. */
+const sidebarElement = $("sidebar");
+const menuButton = $("menu");
+if (sidebarElement && menuButton) {
+menuButton.type = "button";
+menuButton.addEventListener("click", function (event) {
+event.preventDefault();
+event.stopPropagation();
+sidebarElement.classList.toggle("open");
+});
+document.addEventListener("click", function (event) {
+if (
+window.innerWidth <= 800 &&
+sidebarElement.classList.contains("open") &&
+!sidebarElement.contains(event.target) &&
+!menuButton.contains(event.target)
+) {
+sidebarElement.classList.remove("open");
+}
+});
+document.addEventListener("keydown", function (event) {
+if (event.key === "Escape") {
+sidebarElement.classList.remove("open");
+}
+});
+}
+/* =========================
+LOGOUT
+========================= */
+$("logout").onclick=()=>{
+location.href="index.html";
+};
+/* =========================
+SETTINGS NAV
+========================= */
+document
+.querySelectorAll(".nav button[data-page]")
+.forEach(btn=>{
+btn.onclick=()=>{
+document
+.querySelectorAll(".nav button[data-page]")
+.forEach(x=>
+x.classList.remove("active")
+);
+btn.classList.add("active");
+document
+.querySelectorAll(".page")
+.forEach(p=>
+p.classList.remove("active")
+);
+let id=
+btn.dataset.page;
+$(id)
+.classList.add("active");
+if (window.innerWidth <= 800) {
+$("sidebar").classList.remove("open");
+}
+};
+});
+/* =========================
+ADD CARD BUTTON
+========================= */
+const addCardButton=
+document.createElement("button");
+addCardButton.id="addCard";
+addCardButton.className="add";
+addCardButton.innerHTML=
+"＋ নতুন কার্ড";
+$("cards")
+.parentElement
+.insertBefore(
+addCardButton,
+$("cards")
+);
+addCardButton.onclick=()=>{
+currentId=null;
+$("cardName").value="";
+$("cardIcon").value="📁";
+$("cardColor").value="c1";
+$("cardPassword").value="";
+modal("cardModal");
+};
+/* =========================
+SAFE BACKUP MERGE
+========================= */
+function stableJSON(value){
+if(Array.isArray(value)) return '['+value.map(stableJSON).join(',')+']';
+if(value && typeof value==='object') return '{'+Object.keys(value).sort().map(k=>JSON.stringify(k)+':'+stableJSON(value[k])).join(',')+'}';
+return JSON.stringify(value);
+}
+function mergeUniqueRows(oldRows,newRows){
+const out=Array.isArray(oldRows)?oldRows.slice():[];
+const seen=new Set(out.map(stableJSON));
+(Array.isArray(newRows)?newRows:[]).forEach(row=>{
+const k=stableJSON(row);
+if(!seen.has(k)){ seen.add(k); out.push(row); }
+});
+return out;
+}
+function mergeBackupData(existing,incoming){
+const result={...(existing||{})};
+Object.keys(incoming||{}).forEach(k=>{
+if(k!=='cards' && result[k]===undefined) result[k]=incoming[k];
+});
+const current=Array.isArray(result.cards)?result.cards.slice():[];
+const incomingCards=Array.isArray(incoming?.cards)?incoming.cards:[];
+incomingCards.forEach(bc=>{
+if(!bc || typeof bc!=='object') return;
+const idx=current.findIndex(c=>String(c.id)===String(bc.id));
+if(idx<0){ current.push(bc); return; }
+const old=current[idx];
+const merged={...bc,...old};
+merged.headers=Array.from(new Set([...(Array.isArray(old.headers)?old.headers:[]),...(Array.isArray(bc.headers)?bc.headers:[])]));
+merged.rows=mergeUniqueRows(old.rows,bc.rows);
+merged.gmailRecords=mergeUniqueRows(old.gmailRecords,bc.gmailRecords);
+Object.keys(bc).forEach(k=>{ if(merged[k]===undefined) merged[k]=bc[k]; });
+current[idx]=merged;
+});
+result.cards=current;
+return result;
+}
+if($("downloadBackup")){
+$("downloadBackup").onclick=()=>{
+try{
+const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+const url=URL.createObjectURL(blob);
+const a=document.createElement('a');
+a.href=url; a.download='SOROLIPI-backup-'+new Date().toISOString().slice(0,10)+'.json';
+document.body.appendChild(a); a.click(); a.remove();
+setTimeout(()=>URL.revokeObjectURL(url),1000);
+}catch(e){ alert('Backup Download করা যায়নি'); }
+};
+}
+if($("restoreBackup") && $("backupFile")){
+$("restoreBackup").onclick=()=>$("backupFile").click();
+$("backupFile").onchange=async e=>{
+const file=e.target.files?.[0];
+if(!file) return;
+try{
+const parsed=JSON.parse(await file.text());
+if(!parsed || !Array.isArray(parsed.cards)) throw new Error('invalid');
+if(!confirm('Backup-এর তথ্য বর্তমান ডাটার সঙ্গে যুক্ত হবে। পুরোনো ডাটা মুছে যাবে না। চালিয়ে যাবেন?')) return;
+data=mergeBackupData(data,parsed);
+ensureGmailCard();
+(data.cards||[]).forEach(c=>{ normalizeLinkCard(c); normalizeMediaCard(c); });
+persist(); renderCards();
+alert('Backup Upload সম্পন্ন হয়েছে। পুরোনো ডাটা সংরক্ষিত আছে।');
+}catch(err){ alert('ভুল বা অসম্পূর্ণ Backup JSON ফাইল।'); }
+finally{ e.target.value=''; }
+};
+}
+/* =========================
+START
+========================= */
+ensureGmailCard();
+(data.cards||[])
+.forEach(c=>{
+normalizeLinkCard(c);
+normalizeMediaCard(c);
+});
+try{
+if(data &&
+Array.isArray(data.cards)){
+localStorage.setItem(
+KEY,
+JSON.stringify(data)
+);
+}
+}catch(e){}
+renderCards();
+/* =========================
+SYNC
+========================= */
+if("BroadcastChannel" in window){
+try{
+const bc=
+new BroadcastChannel(
+"SOROLIPI_DATA_SYNC"
+);
+}catch(e){}
+}
+</script>
+</body>
+</html>
